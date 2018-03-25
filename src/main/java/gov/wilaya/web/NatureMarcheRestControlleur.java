@@ -2,6 +2,7 @@ package gov.wilaya.web;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,10 @@ public class NatureMarcheRestControlleur {
 
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouterNatureMarche(@RequestBody NatureMarche natureMarche) {
-		natureMarcheRepository.save(natureMarche);
+		if (natureMarcheRepository.findByName(natureMarche.getLibelleNature()) == null || 
+				natureMarcheRepository.findByName(natureMarche.getLibelleNature()).isEmpty()) {
+			natureMarcheRepository.save(natureMarche);
+		}
 	}
 	
 	@RequestMapping(value = "/allNatures", method = RequestMethod.GET)
@@ -39,6 +43,11 @@ public class NatureMarcheRestControlleur {
 		} else {
 			return false;
 		}
+	}
+	
+	@RequestMapping(value="natures", method=RequestMethod.DELETE)
+	public void supprimerNatures(){
+		natureMarcheRepository.deleteAll();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

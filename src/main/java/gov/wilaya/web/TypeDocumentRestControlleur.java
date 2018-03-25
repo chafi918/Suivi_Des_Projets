@@ -2,6 +2,7 @@ package gov.wilaya.web;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,10 @@ public class TypeDocumentRestControlleur {
 
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouterTypeDocument(@RequestBody TypeDocument typeDocument) {
-		typeDocumentRepository.save(typeDocument);
+		if ( typeDocumentRepository.findByName(typeDocument.getLibelleType()) == null || 
+				 typeDocumentRepository.findByName(typeDocument.getLibelleType()).isEmpty()){
+			    typeDocumentRepository.save(typeDocument);
+		}
 	}
 	
 	@RequestMapping(value = "/allTypes", method = RequestMethod.GET)
@@ -40,6 +44,10 @@ public class TypeDocumentRestControlleur {
 		} else {
 			return false;
 		}
+	}
+	@RequestMapping(value="typesDoc", method=RequestMethod.DELETE)
+	public void supprimerTypes(){
+		typeDocumentRepository.deleteAll();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

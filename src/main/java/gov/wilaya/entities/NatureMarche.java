@@ -23,6 +23,12 @@ public class NatureMarche implements Serializable {
 		super();
 		this.libelleNature = libelleNature;
 	}
+	
+	public NatureMarche() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getIdNature() {
 		return idNature;
 	}

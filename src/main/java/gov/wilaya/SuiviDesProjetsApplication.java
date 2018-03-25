@@ -33,7 +33,7 @@ public class SuiviDesProjetsApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		Secteur batiment = new Secteur("batiment");
+		/*Secteur batiment = new Secteur("batiment");
 		Secteur route = new Secteur("route");
 		List<Secteur> secteurs = new ArrayList<>();
 		secteurs.add(batiment);
@@ -41,7 +41,7 @@ public class SuiviDesProjetsApplication implements CommandLineRunner{
 		secteurController.supprimerSecteurs();
 		secteurController.ajouterSecteur(batiment);
 		secteurController.ajouterSecteur(batiment);
-		secteurController.ajouterSecteur(route);
+		secteurController.ajouterSecteur(route);*/
 	
 //		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 ////		projetRepository.save(new Projet("Construction d un espace Tamount","Agadir",5520000, false,df.parse("02/01/2017"),

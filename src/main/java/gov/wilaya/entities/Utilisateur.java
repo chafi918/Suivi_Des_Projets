@@ -56,6 +56,12 @@ public class Utilisateur implements Serializable{
 		this.estActive = estActive;
 		this.division = division;
 	}
+	
+	public Utilisateur() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getIdUser() {
 		return idUser;
 	}

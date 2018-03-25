@@ -23,6 +23,12 @@ public class Profil implements Serializable {
 		super();
 		this.libelleProfil = libelleProfil;
 	}
+	
+	public Profil() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getIdProfil() {
 		return idProfil;
 	}

@@ -2,6 +2,7 @@ package gov.wilaya.web;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,14 +14,17 @@ import gov.wilaya.dao.ProfilRepository;
 import gov.wilaya.entities.Profil;
 
 @RestController
-@RequestMapping(value = "/profil")
+@RequestMapping(value = "/adminProfil")
 public class ProfilRestControlleur {
 	@Autowired
 	private ProfilRepository profilRepository;
 
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouterProfil(@RequestBody Profil profil) {
-		profilRepository.save(profil);
+		if (profilRepository.findByName(profil.getLibelleProfil()) == null || 
+				profilRepository.findByName(profil.getLibelleProfil()).isEmpty()){
+			profilRepository.save(profil);
+		}
 	}
 	
 	@RequestMapping(value = "/profils", method = RequestMethod.GET)
@@ -40,6 +44,11 @@ public class ProfilRestControlleur {
 		} else {
 			return false;
 		}
+	}
+
+	@RequestMapping(value="profils", method=RequestMethod.DELETE)
+	public void supprimerProfils(){
+		profilRepository.deleteAll();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

@@ -26,6 +26,11 @@ public class TypeDocument implements Serializable {
 		this.libelleType = libelleType;
 	}
 
+	public TypeDocument() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getIdTypeDoc() {
 		return idTypeDoc;
 	}

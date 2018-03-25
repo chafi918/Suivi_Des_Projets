@@ -21,19 +21,22 @@ public class UtilisateurRestControlleur {
 
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouter(@RequestBody Utilisateur utilisateur) {
-		utilisateurRepository.save(utilisateur);
+		if ( utilisateurRepository.findByName(utilisateur.getLoginUser()) == null || 
+				utilisateurRepository.findByName(utilisateur.getLoginUser()).isEmpty()){
+			     utilisateurRepository.save(utilisateur);
+		}
 	}
 	
 	@RequestMapping(value = "/utilisateurs", method = RequestMethod.GET)
 	public List<Utilisateur> getUsers() {
 		return utilisateurRepository.findAll();
 	}
-	@RequestMapping(value = "utilisateur/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Utilisateur getUserById(@PathVariable Long id) {
 		return utilisateurRepository.findOne(id);
 	}
 
-	@RequestMapping(value = "utilisateur/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public boolean supprimerUser(@PathVariable Long id) {
 		if (utilisateurRepository.findOne(id) != null) {
 			utilisateurRepository.delete(id);
@@ -42,8 +45,12 @@ public class UtilisateurRestControlleur {
 			return false;
 		}
 	}
+	@RequestMapping(value="utilisateurs", method=RequestMethod.DELETE)
+	public void supprimerUsers(){
+		utilisateurRepository.deleteAll();
+	}
 
-	@RequestMapping(value = "utilisateur/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public void udpateUser(@PathVariable Long id, @RequestBody Utilisateur utilisateur) {
 		if (utilisateurRepository.findOne(id) != null) {
 			utilisateur.setIdUser(id);
