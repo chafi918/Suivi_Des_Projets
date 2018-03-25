@@ -21,8 +21,8 @@ public class DivisionRestControlleur {
 
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouterDivision(@RequestBody Division division) {
-		if (divisionRepository.findByName("%"+division.getLibelleDivision()+"%") == null || 
-				divisionRepository.findByName("%"+division.getLibelleDivision()+"%").isEmpty()) {
+		if (divisionRepository.findByName(division.getLibelleDivision()) == null || 
+				divisionRepository.findByName(division.getLibelleDivision()).isEmpty()) {
 			divisionRepository.save(division);
 		}
 	}

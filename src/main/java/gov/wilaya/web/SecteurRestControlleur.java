@@ -20,8 +20,8 @@ public class SecteurRestControlleur {
 	
 	@RequestMapping(value = "/secteur", method = RequestMethod.POST)
 	public void ajouterSecteur(@RequestBody Secteur secteur) {
-		if (secteurRepository.findByName("%"+secteur.getLibelleSecteur()+"%") == null || 
-				secteurRepository.findByName("%"+secteur.getLibelleSecteur()+"%").isEmpty()) {
+		if (secteurRepository.findByName(secteur.getLibelleSecteur()) == null || 
+				secteurRepository.findByName(secteur.getLibelleSecteur()).isEmpty()) {
 			secteurRepository.save(secteur);
 		}
 	}

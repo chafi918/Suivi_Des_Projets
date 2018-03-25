@@ -20,8 +20,8 @@ public class StatutRestControlleur {
 	
 	@RequestMapping(value = "/statut", method = RequestMethod.POST)
 	public void ajouterStatut(@RequestBody Statut statut) {
-		if (statutRepository.findByName("%"+statut.getLibelleStatut()+"%") == null || 
-				statutRepository.findByName("%"+statut.getLibelleStatut()+"%").isEmpty()) {
+		if (statutRepository.findByName(statut.getLibelleStatut()) == null || 
+				statutRepository.findByName(statut.getLibelleStatut()).isEmpty()) {
 			statutRepository.save(statut);
 		}
 	}

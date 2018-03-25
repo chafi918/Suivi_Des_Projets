@@ -10,6 +10,6 @@ import gov.wilaya.entities.Division;
 
 public interface DivisionRepository extends JpaRepository<Division, Long> {
 
-	@Query("select division from Division division where division.libelleDivision like :x")
+	@Query("select division from Division division where division.libelleDivision = :x")
 	public List<Division> findByName(@Param("x") String label);
 }
