@@ -2,6 +2,7 @@ package gov.wilaya.entities;
 
 import java.io.Serializable;
 
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,7 +13,6 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-
 @Entity
 public class ContactEntreprise implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
