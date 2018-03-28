@@ -16,8 +16,7 @@ public class Division implements Serializable {
 	private Long idDivision;
 	@NotBlank
 	private String libelleDivision;
-	@OneToMany(mappedBy="division")
-	private Collection<Utilisateur> utilisateurs;
+	
 	public Division() {
 		super();
 	}
@@ -37,11 +36,6 @@ public class Division implements Serializable {
 	public void setLibelleDivision(String libelleDivision) {
 		this.libelleDivision = libelleDivision;
 	}
-	public Collection<Utilisateur> getUtilisateurs() {
-		return utilisateurs;
-	}
-	public void setUtilisateurs(Collection<Utilisateur> utilisateurs) {
-		this.utilisateurs = utilisateurs;
-	}
+
 
 }

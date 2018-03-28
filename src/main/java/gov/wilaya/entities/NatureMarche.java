@@ -16,8 +16,8 @@ public class NatureMarche implements Serializable {
 	private Long idNature;
 	@NotBlank
 	private String libelleNature;
-	@OneToMany(mappedBy="nature")
-	private Collection<Marche> marches;
+	/*@OneToMany(mappedBy="nature")
+	private Collection<Marche> marches;*/
 	
 	public NatureMarche(String libelleNature) {
 		super();
@@ -41,10 +41,10 @@ public class NatureMarche implements Serializable {
 	public void setLibelleNature(String libelleNature) {
 		this.libelleNature = libelleNature;
 	}
-	public Collection<Marche> getMarches() {
+	/*public Collection<Marche> getMarches() {
 		return marches;
 	}
 	public void setMarches(Collection<Marche> marches) {
 		this.marches = marches;
-	}
+	}*/
 }

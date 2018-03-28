@@ -16,7 +16,7 @@ import gov.wilaya.web.SecteurRestControlleur;
 
 @SpringBootApplication
 public class SuiviDesProjetsApplication implements CommandLineRunner{
-    @Autowired
+  /*  @Autowired
 	private ProjetRepository projetRepository;
     @Autowired
 	private SecteurRepository secteurRepository;
@@ -25,7 +25,7 @@ public class SuiviDesProjetsApplication implements CommandLineRunner{
     private SecteurRestControlleur secteurController;
     
 	@Autowired
-	private StatutRepository statutRepository;
+	private StatutRepository statutRepository;*/
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SuiviDesProjetsApplication.class, args);

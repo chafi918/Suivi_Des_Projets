@@ -18,10 +18,7 @@ public class Entreprise implements Serializable {
 	private String nomEntreprise;
 	@NotBlank
 	private String adresseEntreprise;
-	@OneToMany(mappedBy="entreprise")
-	private Collection<ContactEntreprise> contacts;
-	@OneToMany(mappedBy="entreprise")
-	private Collection<Marche> marches;
+	
 	
 	public Entreprise() {
 		super();
@@ -48,18 +45,6 @@ public class Entreprise implements Serializable {
 	}
 	public void setAdresseEntreprise(String adresseEntreprise) {
 		this.adresseEntreprise = adresseEntreprise;
-	}
-	public Collection<ContactEntreprise> getContacts() {
-		return contacts;
-	}
-	public void setContacts(Collection<ContactEntreprise> contacts) {
-		this.contacts = contacts;
-	}
-	public Collection<Marche> getMarches() {
-		return marches;
-	}
-	public void setMarches(Collection<Marche> marches) {
-		this.marches = marches;
 	}
 	
 }

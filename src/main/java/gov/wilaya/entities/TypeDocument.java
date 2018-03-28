@@ -18,8 +18,6 @@ public class TypeDocument implements Serializable {
 	private Long idTypeDoc;
 	@NotBlank
 	private String libelleType;
-	@OneToMany(mappedBy="type")
-	private Collection<Document> documents;
 
 	public TypeDocument(String libelleType) {
 		super();
@@ -46,13 +44,4 @@ public class TypeDocument implements Serializable {
 	public void setLibelleType(String libelleType) {
 		this.libelleType = libelleType;
 	}
-
-	public Collection<Document> getDocuments() {
-		return documents;
-	}
-
-	public void setDocuments(Collection<Document> documents) {
-		this.documents = documents;
-	}
-	
 }

@@ -24,7 +24,7 @@ public class Marche implements Serializable {
 	private double montantTravauxRealises;
 	private String delaiExecution;
 	private float tauxAvancement;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="ID_NATUREMARCHE")
 	private NatureMarche nature;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -35,14 +35,21 @@ public class Marche implements Serializable {
 	private Entreprise entreprise;
 	
 	public Marche(String numeroMarche, double montantMarche, double montantTravauxRealises, String delaiExecution,
-			float tauxAvancement) {
+			float tauxAvancement,NatureMarche nature) {
 		super();
 		this.numeroMarche = numeroMarche;
 		this.montantMarche = montantMarche;
 		this.montantTravauxRealises = montantTravauxRealises;
 		this.delaiExecution = delaiExecution;
 		this.tauxAvancement = tauxAvancement;
+		this.nature = nature;
 	}
+	
+	public Marche() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getIdMarche() {
 		return idMarche;
 	}

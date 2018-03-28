@@ -1,6 +1,7 @@
 package gov.wilaya.entities;
 
 import java.io.Serializable;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,9 @@ import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Projet implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -46,19 +50,13 @@ public class Projet implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_STATUT")
 	private Statut statut;
-	@OneToMany(mappedBy="projet",fetch=FetchType.LAZY)
+	/*@OneToMany(mappedBy="projet",fetch=FetchType.LAZY)
 	private Collection<Observation> observations;
 	@OneToMany(mappedBy="projet",fetch=FetchType.LAZY)
 	private Collection<Document> documents;
 	@OneToMany(mappedBy="projet",fetch=FetchType.LAZY)
-	private Collection<Marche> marches;
+	private Collection<Marche> marches;*/
 	
-	public Collection<Marche> getMarches() {
-		return marches;
-	}
-	public void setMarches(Collection<Marche> marches) {
-		this.marches = marches;
-	}
 	public Long getIdProjet() {
 		return idProjet;
 	}
@@ -130,24 +128,6 @@ public class Projet implements Serializable {
 	}
 	public void setStatut(Statut statut) {
 		this.statut = statut;
-	}
-	public Collection<Observation> getObservations() {
-		return observations;
-	}
-	public void setObservations(Collection<Observation> observations) {
-		this.observations = observations;
-	}
-	public Collection<Document> getDocuments() {
-		return documents;
-	}
-	public void setDocuments(Collection<Document> documents) {
-		this.documents = documents;
-	}
-	public Collection<Marche> getMarchés() {
-		return marches;
-	}
-	public void setMarchés(Collection<Marche> marchés) {
-		this.marches = marchés;
 	}
 
 	public Projet(String intitule, String commune, double montantProgramme, boolean estProjetRoyal, Date dateAO,

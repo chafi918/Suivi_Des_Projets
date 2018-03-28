@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Secteur implements Serializable{
 	
@@ -17,8 +20,6 @@ public class Secteur implements Serializable{
 	private Long idSecteur;
 	@NotBlank
 	private String libelleSecteur;
-	@OneToMany(mappedBy="secteur")
-	private Collection<Projet> projets;
 	
 	public Secteur(String libelleSecteur) {
 		super();
@@ -36,15 +37,9 @@ public class Secteur implements Serializable{
 	public void setLibelleSecteur(String libelleSecteur) {
 		this.libelleSecteur = libelleSecteur;
 	}
-	public Collection<Projet> getProjets() {
-		return projets;
-	}
-	public void setProjets(Collection<Projet> projets) {
-		this.projets = projets;
-	}
+
 	public Secteur() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 }

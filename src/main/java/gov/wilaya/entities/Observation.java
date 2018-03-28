@@ -1,6 +1,7 @@
 package gov.wilaya.entities;
 
 import java.io.Serializable;
+
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class Observation implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -29,6 +31,10 @@ public class Observation implements Serializable {
 	@JoinColumn(name="ID_PROJET")
 	private Projet projet;
 	
+	public Observation() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public Observation(String observation, Date dateObservation, String nomObservant) {
 		super();
 		this.observation = observation;
