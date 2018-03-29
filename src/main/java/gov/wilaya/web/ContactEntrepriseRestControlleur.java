@@ -58,5 +58,8 @@ public class ContactEntrepriseRestControlleur {
 		}
 		return false;
 	}
-
+/*	@RequestMapping(value = "/contacts/entreprise/{id}", method = RequestMethod.GET)
+	public List<ContactEntreprise> getContactParEntreprise(@PathVariable Long id) {
+		return contactEntrepriseRepository.findContacts(id);
+	}*/
 }

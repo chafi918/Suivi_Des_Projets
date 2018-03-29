@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import gov.wilaya.dao.EntrepriseRepository;
 import gov.wilaya.entities.ContactEntreprise;
 import gov.wilaya.entities.Entreprise;
+import gov.wilaya.entities.Marche;
 
 @RestController
 @RequestMapping(value = "/entreprise")
@@ -61,4 +62,5 @@ public class EntrepriseRestControlleur {
 		}
 		return false;
 	}
+	
 }
