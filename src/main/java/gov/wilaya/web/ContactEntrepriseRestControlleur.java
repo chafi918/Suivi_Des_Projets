@@ -1,4 +1,4 @@
-package gov.wilaya.web;
+ package gov.wilaya.web;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class ContactEntrepriseRestControlleur {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public boolean udpateDivision(@PathVariable Long id, @RequestBody ContactEntreprise contactEntreprise) {
+	public boolean udpateContact(@PathVariable Long id, @RequestBody ContactEntreprise contactEntreprise) {
 		if ( contactEntrepriseRepository.findOne(id) != null) {
 			 contactEntreprise.setIdContact(id);
 			 contactEntrepriseRepository.save(contactEntreprise);
