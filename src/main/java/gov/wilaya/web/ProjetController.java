@@ -4,6 +4,8 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,6 +67,12 @@ public class ProjetController {
 	@RequestMapping(value = "secteur/{idSecteur}", method = RequestMethod.GET)
 	public List<Projet> getProjetParSecteur(@PathVariable Long idSecteur) {
 		return projetRepository.chercherParSecteur(idSecteur);
+	}
+	@RequestMapping(value = "/statut", method = RequestMethod.GET)
+	public Page<Projet> getProjetParStatut(@RequestParam(name="idStatut") Long idStatut ,
+			@RequestParam(name="page",defaultValue="0")int page,
+			@RequestParam(name="size",defaultValue="1")int size) {
+		return projetRepository.chercherParStatut(idStatut,new PageRequest(page, size));
 	}
 }
 	

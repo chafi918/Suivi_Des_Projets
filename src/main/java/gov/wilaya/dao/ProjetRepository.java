@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
 import gov.wilaya.entities.Projet;
+import gov.wilaya.entities.Statut;
 
 @Component
 public interface ProjetRepository extends JpaRepository<Projet, Long> {
@@ -19,9 +20,11 @@ public interface ProjetRepository extends JpaRepository<Projet, Long> {
 	
 	@Query("select p from Projet p where p.secteur.idSecteur = :x")
 	public List<Projet> chercherParSecteur(@Param("x")Long idSecteur);
+	@Query("select p from Projet p where p.statut.idStatut = :x")
+	public Page<Projet> chercherParStatut(@Param("x")Long idStatut ,Pageable p);
 	/*@Query("select p from Projet p where p.intitule = :x")
 	public Projet chercherParIntitule(@Param("x")String intitule);
 	public Page<Projet> chercherParCommune(String commune,Pageable p);
-	public Page<Projet> chercherParStatut(Statut statut,Pageable p);*/
+	;*/
 
 }
