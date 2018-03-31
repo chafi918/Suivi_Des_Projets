@@ -3,10 +3,13 @@ package gov.wilaya.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.wilaya.dao.SecteurRepository;
@@ -18,12 +21,20 @@ public class SecteurRestControlleur {
 	@Autowired
 	private SecteurRepository secteurRepository;
 	
+	
 	@RequestMapping(value = "/secteur", method = RequestMethod.POST)
 	public void ajouterSecteur(@RequestBody Secteur secteur) {
 		if (secteurRepository.findByName(secteur.getLibelleSecteur()) == null || 
 				secteurRepository.findByName(secteur.getLibelleSecteur()).isEmpty()) {
 			secteurRepository.save(secteur);
 		}
+	}
+
+	@RequestMapping(value = "/secteurBN/{secteur}", method = RequestMethod.GET)
+	public Page<Secteur> getSecteurByName(@PathVariable String secteur,
+			@RequestParam(name="page",defaultValue="0")int page,
+			@RequestParam(name="size",defaultValue="5")int size) {
+		return secteurRepository.searchByName(secteur, new PageRequest(page, size));
 	}
 
 	@RequestMapping(value = "/secteurs", method = RequestMethod.GET)
