@@ -18,10 +18,6 @@
 *.tar.gz
 *.rar
 
-.classpath
-.project
-.settings/
-
 *application.properties
 
 
