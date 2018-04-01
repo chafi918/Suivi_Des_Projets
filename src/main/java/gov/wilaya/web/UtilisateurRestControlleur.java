@@ -3,10 +3,13 @@ package gov.wilaya.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.wilaya.dao.UtilisateurRepository;
@@ -21,10 +24,32 @@ public class UtilisateurRestControlleur {
 
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouter(@RequestBody Utilisateur utilisateur) {
-		if ( utilisateurRepository.findByName(utilisateur.getLoginUser()) == null || 
-				utilisateurRepository.findByName(utilisateur.getLoginUser()).isEmpty()){
+		if ( utilisateurRepository.searchByLogin(utilisateur.getLoginUser()) == null || 
+				utilisateurRepository.searchByLogin(utilisateur.getLoginUser()).isEmpty()){
 			     utilisateurRepository.save(utilisateur);
 		}
+	}
+	@RequestMapping(value = "/{motCle}", method = RequestMethod.GET)
+	public Page<Utilisateur> getUserByMC(@PathVariable String motCle,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
+		return utilisateurRepository.findByMotCle(motCle, new PageRequest(page, size));
+	}
+	@RequestMapping(value = "/{idDivision}", method = RequestMethod.GET)
+	public Page<Utilisateur> getUserByDivision(@PathVariable Long idDivision,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
+		return utilisateurRepository.findByDivision(idDivision, new PageRequest(page, size));
+	}
+	@RequestMapping(value = "/getAllUtilisateurs", method = RequestMethod.GET)
+	public Page<Utilisateur> getUsers(@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
+		return utilisateurRepository.findAll(new PageRequest(page, size));
+	}
+	@RequestMapping(value = "/getActiveUtilisateurs", method = RequestMethod.GET)
+	public Page<Utilisateur> getActiveUsers(@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
+		return utilisateurRepository.findActiveUsers(new PageRequest(page, size));
 	}
 	
 	@RequestMapping(value = "/utilisateurs", method = RequestMethod.GET)

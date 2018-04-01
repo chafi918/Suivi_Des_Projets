@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.wilaya.dao.DocumentRepository;
+import gov.wilaya.dao.ProjetRepository;
 import gov.wilaya.entities.Document;
 
 @RestController
@@ -21,17 +22,34 @@ public class DocumentRestControlleur {
 	@Autowired
 	private DocumentRepository documentRepository;
 	
+	@Autowired
+	private ProjetRepository projetRepository;
+	
 	@RequestMapping(value = "/document", method = RequestMethod.POST)
-	public void ajouterDocument(@RequestBody Document document) {
-		if (documentRepository.findByName(document.getNomDocument()) == null || 
-				documentRepository.findByName(document.getNomDocument()).isEmpty()) {
+	public void ajouterDocument(@RequestBody Document document, @RequestParam Long idProjet) {
+		if (documentRepository.searchByName(document.getNomDocument(), idProjet) == null || 
+				documentRepository.searchByName(document.getNomDocument(), idProjet).isEmpty()) {
+			document.setProjet(projetRepository.findOne(idProjet));
 			documentRepository.save(document);
 		}
 	}
 	
 	@RequestMapping(value = "/documents", method = RequestMethod.GET)
-	public List<Document> getProjets(){
+	public List<Document> getDocuments(){
 		return documentRepository.findAll();
+	}
+	
+	@RequestMapping(value = "/getDocuments", method = RequestMethod.GET)
+	public Page<Document> getDocuments(@RequestParam(name="page",defaultValue="0")int page,
+			@RequestParam(name="size",defaultValue="5")int size){
+		return documentRepository.findAll(new PageRequest(page, size));
+	}
+	
+	@RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
+	public Page<Document> getDocuments(@PathVariable String name,
+	@RequestParam(name="page",defaultValue="0")int page,
+	@RequestParam(name="size",defaultValue="5")int size){
+		return documentRepository.findByName(name, new PageRequest(page, size));
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -64,13 +82,14 @@ public class DocumentRestControlleur {
 		documentRepository.deleteAll();
 	}
 	
-	@RequestMapping(value = "/projet", method = RequestMethod.GET)
-	public Page<Document> getDocumentsByProject(@RequestParam(name="projet") Long idProjet,
+	@RequestMapping(value = "/projet/{idProjet}", method = RequestMethod.GET)
+	public Page<Document> getDocumentsByProject(@PathVariable Long idProjet,
 			@RequestParam(name="page",defaultValue="0")int page,
 			@RequestParam(name="size",defaultValue="5")int size) {
 		return documentRepository.chercherParProjet(idProjet, new PageRequest(page, size));
 	}
-	@RequestMapping(value = "document/{idType}", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "type/{idType}", method = RequestMethod.GET)
 	public Page<Document> getDocumentsByType(@PathVariable Long idType,
 			@RequestParam(name="page",defaultValue="0")int page,
 			@RequestParam(name="size",defaultValue="5")int size) {

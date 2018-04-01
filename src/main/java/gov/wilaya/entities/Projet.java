@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,6 +31,7 @@ public class Projet implements Serializable {
 	private String intitule;
 	@NotBlank
 	private String commune;
+	@NotNull
 	@Min(value=0)
 	private double montantProgramme;
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -44,9 +46,11 @@ public class Projet implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date dateAO;
 	private boolean estMasque;
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_SECTEUR")
 	private Secteur secteur;
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_STATUT")
 	private Statut statut;

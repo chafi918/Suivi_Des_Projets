@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 @Entity
@@ -18,11 +19,15 @@ public class Marche implements Serializable {
 	private Long idMarche;
 	@NotBlank
 	private String numeroMarche;
+	@NotNull
 	@Min(value=0)
 	private double montantMarche;
+	@NotNull
 	@Min(value=0)
 	private double montantTravauxRealises;
+	@NotNull
 	private String delaiExecution;
+	@NotNull
 	private float tauxAvancement;
 	@ManyToOne
 	@JoinColumn(name="ID_NATUREMARCHE")

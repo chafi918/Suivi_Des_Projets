@@ -20,7 +20,6 @@ public class Entreprise implements Serializable {
 	@NotBlank
 	private String adresseEntreprise;
 	
-	
 	public Entreprise() {
 		super();
 	}

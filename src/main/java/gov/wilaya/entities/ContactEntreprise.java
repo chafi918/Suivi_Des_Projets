@@ -19,11 +19,13 @@ public class ContactEntreprise implements Serializable {
 	private Long idContact;
 	@NotBlank
 	private String nomContact;
+	@NotBlank
 	private String responsabilite;
 	private long telephone;
 	@Email
 	@NotBlank
 	private String mailContact;
+	@NotBlank
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_ENTREPRISE")
 	private Entreprise entreprise;

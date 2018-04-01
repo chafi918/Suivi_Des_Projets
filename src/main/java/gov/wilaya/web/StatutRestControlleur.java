@@ -3,10 +3,13 @@ package gov.wilaya.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.wilaya.dao.StatutRepository;
@@ -17,13 +20,26 @@ import gov.wilaya.entities.Statut;
 public class StatutRestControlleur {
 	@Autowired
 	private StatutRepository statutRepository;
-	
+
 	@RequestMapping(value = "/statut", method = RequestMethod.POST)
 	public void ajouterStatut(@RequestBody Statut statut) {
-		if (statutRepository.findByName(statut.getLibelleStatut()) == null || 
-				statutRepository.findByName(statut.getLibelleStatut()).isEmpty()) {
+		if (statutRepository.searchByName(statut.getLibelleStatut()) == null
+				|| statutRepository.searchByName(statut.getLibelleStatut()).isEmpty()) {
 			statutRepository.save(statut);
 		}
+	}
+
+	@RequestMapping(value = "/statutBN/{statut}", method = RequestMethod.GET)
+	public Page<Statut> getStatutByName(@PathVariable String statut,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
+		return statutRepository.findByName(statut, new PageRequest(page, size));
+	}
+
+	@RequestMapping(value = "/getAllStatuts", method = RequestMethod.GET)
+	public Page<Statut> getStatuts(@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
+		return statutRepository.findAll(new PageRequest(page, size));
 	}
 
 	@RequestMapping(value = "/statuts", method = RequestMethod.GET)
@@ -46,11 +62,11 @@ public class StatutRestControlleur {
 		}
 	}
 
-	@RequestMapping(value="statuts", method=RequestMethod.DELETE)
-	public void supprimerStatuts(){
+	@RequestMapping(value = "statuts", method = RequestMethod.DELETE)
+	public void supprimerStatuts() {
 		statutRepository.deleteAll();
 	}
-	
+
 	@RequestMapping(value = "statuts/{id}", method = RequestMethod.PUT)
 	public boolean udpateStatut(@PathVariable Long id, @RequestBody Statut statut) {
 		if (statutRepository.findOne(id) != null) {

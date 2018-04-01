@@ -13,10 +13,14 @@ import gov.wilaya.entities.Document;
 public interface DocumentRepository extends JpaRepository<Document, Long> {
 
 	@Query("select document from Document document where document.nomDocument like %:x%")
-	public List<Document> findByName(@Param("x") String nomDocument);
+	public Page<Document> findByName(@Param("x") String nomDocument, Pageable p);
 
-	@Query("select document from Document document where document.idDocument = :x")
-	public Page<Document> chercherParType(@Param("x") Long idDocument, Pageable p);
+	@Query("select document from Document document where document.nomDocument = :x "
+			+ "and document.projet.idProjet = :idProjet")
+	public List<Document> searchByName(@Param("x") String nomDocument, @Param("idProjet") Long idProjet);
+	
+	@Query("select document from Document document where document.type.idTypeDoc = :x")
+	public Page<Document> chercherParType(@Param("x") Long idTypeDocument, Pageable p);
 
 	@Query("select document from Document document where document.projet.idProjet = :x")
 	public Page<Document> chercherParProjet(@Param("x") Long idProjet, Pageable p);

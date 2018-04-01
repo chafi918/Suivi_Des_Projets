@@ -3,16 +3,17 @@ package gov.wilaya.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.wilaya.dao.EntrepriseRepository;
-import gov.wilaya.entities.ContactEntreprise;
 import gov.wilaya.entities.Entreprise;
-import gov.wilaya.entities.Marche;
 
 @RestController
 @RequestMapping(value = "/entreprise")
@@ -23,8 +24,8 @@ public class EntrepriseRestControlleur {
 	
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouterContact(@RequestBody Entreprise entreprise) {
-		if (entrepriseRepository.findByName(entreprise.getNomEntreprise()) == null || 
-				entrepriseRepository.findByName(entreprise.getNomEntreprise()).isEmpty()) {
+		if (entrepriseRepository.searchByName(entreprise.getNomEntreprise()) == null || 
+				entrepriseRepository.searchByName(entreprise.getNomEntreprise()).isEmpty()) {
 			entrepriseRepository.save(entreprise);
 		}
 	}
@@ -33,6 +34,14 @@ public class EntrepriseRestControlleur {
 	public List<Entreprise> getEntreprises() {
 		return entrepriseRepository.findAll();
 	}
+	
+	@RequestMapping(value = "/entreprises/{name}", method = RequestMethod.GET)
+	public Page<Entreprise> getEntreprisesByName(@PathVariable String name,
+		@RequestParam(name="page",defaultValue="0")int page,
+		@RequestParam(name="size",defaultValue="5")int size) {
+		return entrepriseRepository.findByName(name, new PageRequest(page, size));
+	}
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Entreprise getEntrepriseById(@PathVariable Long id) {
 		return entrepriseRepository.findOne(id);

@@ -2,7 +2,6 @@ package gov.wilaya.web;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import gov.wilaya.dao.ProjetRepository; 
+
+import gov.wilaya.dao.ProjetRepository;
+import gov.wilaya.dao.SecteurRepository;
+import gov.wilaya.dao.StatutRepository;
 import gov.wilaya.entities.Projet;
 
 @RestController
@@ -20,15 +22,20 @@ import gov.wilaya.entities.Projet;
 public class ProjetController {
 	@Autowired
 	private ProjetRepository projetRepository;
-
+	@Autowired
+	private SecteurRepository secteurRepository;
+	@Autowired
+	private StatutRepository statutRepository;
 	
 	@RequestMapping(value = "/projets", method = RequestMethod.GET)
 	public List<Projet> getProjets(){
 		return projetRepository.findAll();
 	}
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
-	public void ajouterProjet(@RequestBody Projet projet) {
-			projetRepository.save(projet);
+	public void ajouterProjet(@RequestBody Projet projet,@RequestParam Long idStatut,@RequestParam Long idSecteur) {
+		projet.setSecteur(secteurRepository.findOne(idSecteur));
+		projet.setStatut(statutRepository.findOne(idStatut));
+		projetRepository.save(projet);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -61,19 +68,42 @@ public class ProjetController {
 	}
 	
 	@RequestMapping(value = "/commune", method = RequestMethod.GET)
-	public List<Projet> getProjetParCommune(@RequestParam(name="commune") String commune) {
-		return projetRepository.chercherParCommune(commune);
+	public Page<Projet> getProjetParCommune(@RequestParam(name="commune") String commune,
+			@RequestParam(name="page",defaultValue="0")int page,
+			@RequestParam(name="size",defaultValue="5")int size) {
+		return projetRepository.chercherParCommune(commune, new PageRequest(page, size));
 	}
 	@RequestMapping(value = "secteur/{idSecteur}", method = RequestMethod.GET)
-	public List<Projet> getProjetParSecteur(@PathVariable Long idSecteur) {
-		return projetRepository.chercherParSecteur(idSecteur);
-	}
-	@RequestMapping(value = "/statut", method = RequestMethod.GET)
-	public Page<Projet> getProjetParStatut(@RequestParam(name="idStatut") Long idStatut ,
+	public Page<Projet> getProjetParSecteur(@PathVariable Long idSecteur,
 			@RequestParam(name="page",defaultValue="0")int page,
-			@RequestParam(name="size",defaultValue="1")int size) {
-		return projetRepository.chercherParStatut(idStatut,new PageRequest(page, size));
+			@RequestParam(name="size",defaultValue="5")int size) {
+		return projetRepository.chercherParSecteur(idSecteur, new PageRequest(page, size));
 	}
+	@RequestMapping(value = "statut/{idStatut}", method = RequestMethod.GET)
+	public Page<Projet> getProjetParStatut(@PathVariable Long idStatut,
+			@RequestParam(name="page",defaultValue="0")int page,
+			@RequestParam(name="size",defaultValue="5")int size) {
+		return projetRepository.chercherParStatut(idStatut, new PageRequest(page, size));
+	}
+	@RequestMapping(value = "/intitule", method = RequestMethod.GET)
+	public Page<Projet> getProjetParIntitule(@RequestParam(name="intitule") String intitule ,
+			@RequestParam(name="page",defaultValue="0")int page,
+			@RequestParam(name="size",defaultValue="5")int size) {
+		return projetRepository.chercherParIntitule(intitule,new PageRequest(page, size));
+	}
+	
+	@RequestMapping(value = "/royal", method = RequestMethod.GET)
+	public Page<Projet> getProjetRoyal(@RequestParam(name="page",defaultValue="0")int page,
+			@RequestParam(name="size",defaultValue="5")int size) {
+		return projetRepository.chercherProjetRoyal(new PageRequest(page, size));
+	}
+	
+	@RequestMapping(value = "/masque", method = RequestMethod.GET)
+	public Page<Projet> getProjetMasque(@RequestParam(name="page",defaultValue="0")int page,
+			@RequestParam(name="size",defaultValue="5")int size) {
+		return projetRepository.chercherProjetMasque(new PageRequest(page, size));
+	}
+	
 }
 	
 

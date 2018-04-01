@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -31,8 +32,11 @@ public class Utilisateur implements Serializable{
 	private String loginUser;
 	@NotBlank
 	private String mdpUser;
+	@NotBlank
 	private String responsabilite;
+	@NotNull
 	private boolean estActive;
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_DIVISION")
 	private Division division;

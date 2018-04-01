@@ -20,26 +20,31 @@ import gov.wilaya.entities.Secteur;
 public class SecteurRestControlleur {
 	@Autowired
 	private SecteurRepository secteurRepository;
-	
-	
+
 	@RequestMapping(value = "/secteur", method = RequestMethod.POST)
 	public void ajouterSecteur(@RequestBody Secteur secteur) {
-		if (secteurRepository.findByName(secteur.getLibelleSecteur()) == null || 
-				secteurRepository.findByName(secteur.getLibelleSecteur()).isEmpty()) {
+		if (secteurRepository.findByName(secteur.getLibelleSecteur()) == null
+				|| secteurRepository.findByName(secteur.getLibelleSecteur()).isEmpty()) {
 			secteurRepository.save(secteur);
 		}
 	}
 
 	@RequestMapping(value = "/secteurBN/{secteur}", method = RequestMethod.GET)
 	public Page<Secteur> getSecteurByName(@PathVariable String secteur,
-			@RequestParam(name="page",defaultValue="0")int page,
-			@RequestParam(name="size",defaultValue="5")int size) {
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
 		return secteurRepository.searchByName(secteur, new PageRequest(page, size));
 	}
 
 	@RequestMapping(value = "/secteurs", method = RequestMethod.GET)
 	public List<Secteur> getSecteurs() {
 		return secteurRepository.findAll();
+	}
+
+	@RequestMapping(value = "/getAllSecteurs", method = RequestMethod.GET)
+	public Page<Secteur> getSecteurs(@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
+		return secteurRepository.findAll(new PageRequest(page, size));
 	}
 
 	@RequestMapping(value = "secteur/{id}", method = RequestMethod.GET)
@@ -57,11 +62,11 @@ public class SecteurRestControlleur {
 		}
 	}
 
-	@RequestMapping(value="secteurs", method=RequestMethod.DELETE)
-	public void supprimerSecteurs(){
+	@RequestMapping(value = "secteurs", method = RequestMethod.DELETE)
+	public void supprimerSecteurs() {
 		secteurRepository.deleteAll();
 	}
-	
+
 	@RequestMapping(value = "secteurs/{id}", method = RequestMethod.PUT)
 	public boolean udpateSecteur(@PathVariable Long id, @RequestBody Secteur secteur) {
 		if (secteurRepository.findOne(id) != null) {
