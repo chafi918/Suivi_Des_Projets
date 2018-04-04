@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import gov.wilaya.entities.Projet;
 
 @RestController
 @RequestMapping(value = "/projet")
+@CrossOrigin("*")
 public class ProjetController {
 	@Autowired
 	private ProjetRepository projetRepository;
@@ -26,10 +28,15 @@ public class ProjetController {
 	private SecteurRepository secteurRepository;
 	@Autowired
 	private StatutRepository statutRepository;
+	@RequestMapping("/all") 
+	public List<Projet> getProduits(){ 
+		return projetRepository.findAll(); 
+	}
 	
-	@RequestMapping(value = "/projets", method = RequestMethod.GET)
-	public List<Projet> getProjets(){
-		return projetRepository.findAll();
+	@RequestMapping(value = "/getProjets", method = RequestMethod.GET)
+	public Page<Projet> getProjets(@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
+		return projetRepository.findAll(new PageRequest(page, size));
 	}
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouterProjet(@RequestBody Projet projet,@RequestParam Long idStatut,@RequestParam Long idSecteur) {
