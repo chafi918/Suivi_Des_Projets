@@ -16,8 +16,6 @@ public class Profil implements Serializable {
 	private Long idProfil;
 	@NotBlank
 	private String libelleProfil;
-	@ManyToMany(mappedBy="profil")
-	private Collection<Utilisateur> utilisateurs;
 	
 	public Profil(String libelleProfil) {
 		super();
@@ -40,12 +38,6 @@ public class Profil implements Serializable {
 	}
 	public void setLibelleProfil(String libelleProfil) {
 		this.libelleProfil = libelleProfil;
-	}
-	public Collection<Utilisateur> getUtilisateurs() {
-		return utilisateurs;
-	}
-	public void setUtilisateurs(Collection<Utilisateur> utilisateurs) {
-		this.utilisateurs = utilisateurs;
 	}
 
 }

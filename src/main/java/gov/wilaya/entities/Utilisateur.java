@@ -40,16 +40,13 @@ public class Utilisateur implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_DIVISION")
 	private Division division;
-	@ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-        name = "Utilisateur_Profil", 
-        joinColumns = { @JoinColumn(name = "idUser") }, 
-        inverseJoinColumns = { @JoinColumn(name = "idProfil") }
-    )
-    private Collection<Profil> profil;
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="ID_PROFIL")
+    private Profil profil;
 
 	public Utilisateur(String nomUser, String prenomUser, String mailUser, String loginUser, String mdpUser,
-			String responsabilite, boolean estActive, Division division) {
+			String responsabilite, boolean estActive, Division division, Profil profil) {
 		super();
 		this.nomUser = nomUser;
 		this.prenomUser = prenomUser;
@@ -59,6 +56,7 @@ public class Utilisateur implements Serializable{
 		this.responsabilite = responsabilite;
 		this.estActive = estActive;
 		this.division = division;
+		this.profil = profil;
 	}
 	
 	public Utilisateur() {
@@ -120,10 +118,13 @@ public class Utilisateur implements Serializable{
 	public void setDivision(Division division) {
 		this.division = division;
 	}
-	public Collection<Profil> getProfil() {
+
+	public Profil getProfil() {
 		return profil;
 	}
-	public void setProfil(Collection<Profil> profil) {
+
+	public void setProfil(Profil profil) {
 		this.profil = profil;
 	}
+	
 }
