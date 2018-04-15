@@ -1,18 +1,8 @@
 package gov.wilaya;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import gov.wilaya.dao.ProjetRepository;
-import gov.wilaya.dao.SecteurRepository;
-import gov.wilaya.dao.StatutRepository;
-import gov.wilaya.entities.Secteur;
-import gov.wilaya.web.SecteurRestControlleur;
 
 @SpringBootApplication
 public class SuiviDesProjetsApplication implements CommandLineRunner{

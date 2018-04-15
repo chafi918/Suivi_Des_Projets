@@ -16,6 +16,6 @@ public interface DivisionRepository extends JpaRepository<Division, Long> {
 	@Query("select division from Division division where division.libelleDivision like %:x%")
 	public List<Division> findByName(@Param("x") String label);
 	
-	@Query("select division from Division division where division.libelleDivision = :x")
+	@Query("select division from Division division where division.libelleDivision like %:x%")
 	public Page<Division> searchByName(@Param("x") String label, Pageable p);
 }
