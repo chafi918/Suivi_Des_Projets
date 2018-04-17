@@ -14,7 +14,7 @@ import gov.wilaya.entities.Secteur;
 @Component
 public interface SecteurRepository extends JpaRepository<Secteur, Long> {
 
-	@Query("select secteur from Secteur secteur where secteur.libelleSecteur = :x")
+	@Query("select secteur from Secteur secteur where secteur.libelleSecteur like %:x%")
 	public Page<Secteur> searchByName(@Param("x") String label, Pageable p);
 	
 	@Query("select secteur from Secteur secteur where secteur.libelleSecteur like %:x%")

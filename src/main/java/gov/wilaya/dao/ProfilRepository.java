@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
+import gov.wilaya.entities.Division;
 import gov.wilaya.entities.Profil;
 @Component
 public interface ProfilRepository extends JpaRepository<Profil, Long> {
@@ -17,5 +18,8 @@ public interface ProfilRepository extends JpaRepository<Profil, Long> {
 	
 	@Query("select profil from Profil profil where profil.libelleProfil = :x")
 	public List<Profil> searchByName(@Param("x") String label);
+	
+	@Query("select profil from Profil profil where profil.libelleProfil like %:x%")
+	public Page<Profil>  searchByName(@Param("x") String label, Pageable p);
 		
 }

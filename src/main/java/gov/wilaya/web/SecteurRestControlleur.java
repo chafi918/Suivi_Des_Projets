@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,8 @@ import gov.wilaya.dao.SecteurRepository;
 import gov.wilaya.entities.Secteur;
 
 @RestController
-@RequestMapping(value = "/adminSecteur")
+@RequestMapping(value = "/admin")
+@CrossOrigin("*")
 public class SecteurRestControlleur {
 	@Autowired
 	private SecteurRepository secteurRepository;
@@ -29,10 +31,11 @@ public class SecteurRestControlleur {
 		}
 	}
 
-	@RequestMapping(value = "/secteurBN/{secteur}", method = RequestMethod.GET)
-	public Page<Secteur> getSecteurByName(@PathVariable String secteur,
+	@RequestMapping(value = "/secteurBN", method = RequestMethod.GET)
+	public Page<Secteur> getSecteurByName(@RequestParam(name = "name", defaultValue = "") String secteur,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
+		System.out.println(secteur);
 		return secteurRepository.searchByName(secteur, new PageRequest(page, size));
 	}
 

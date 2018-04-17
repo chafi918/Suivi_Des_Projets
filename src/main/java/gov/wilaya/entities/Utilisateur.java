@@ -36,11 +36,11 @@ public class Utilisateur implements Serializable{
 	private String responsabilite;
 	@NotNull
 	private boolean estActive;
-	@NotNull
+	//@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_DIVISION")
 	private Division division;
-	@NotNull
+	//@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_PROFIL")
     private Profil profil;

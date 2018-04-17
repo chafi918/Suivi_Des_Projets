@@ -59,8 +59,8 @@ public class ContactEntrepriseRestControlleur {
 		return contactEntrepriseRepository.findByEntreprise(idEntreprise, new PageRequest(page, size));
 	}
 
-	@RequestMapping(value = "/name/{contact}", method = RequestMethod.GET)
-	public Page<ContactEntreprise> getContactByName(@PathVariable String contact,
+	@RequestMapping(value = "/name", method = RequestMethod.GET)
+	public Page<ContactEntreprise> getContactByName(@RequestParam(name = "name", defaultValue = "") String contact,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
 		return contactEntrepriseRepository.findByName(contact, new PageRequest(page, size));

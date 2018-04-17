@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.wilaya.dao.ProfilRepository;
 import gov.wilaya.entities.Profil;
+import gov.wilaya.entities.Secteur;
 
 @RestController
 @RequestMapping(value = "/adminProfil")
+@CrossOrigin("*")
 public class ProfilRestControlleur {
 	@Autowired
 	private ProfilRepository profilRepository;
@@ -43,6 +46,13 @@ public class ProfilRestControlleur {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Profil getProfilById(@PathVariable Long id) {
 		return profilRepository.findOne(id);
+	}
+	
+	@RequestMapping(value = "/profilBN/", method = RequestMethod.GET)
+	public Page<Profil> getProfilByName(@RequestParam(name = "name", defaultValue = "") String profil,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
+		return profilRepository.searchByName(profil, new PageRequest(page, size));
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
