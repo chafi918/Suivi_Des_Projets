@@ -27,12 +27,12 @@ public class UtilisateurRestControlleur {
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouter(@RequestBody Utilisateur utilisateur) {
 		if ( utilisateurRepository.searchByLogin(utilisateur.getLoginUser()) == null || 
-				utilisateurRepository.searchByLogin(utilisateur.getLoginUser()).isEmpty()){
+				utilisateurRepository.searchByLogin(utilisateur.getLoginUser()).isEmpty()){ 
 			     utilisateurRepository.save(utilisateur);
 		}
 	}
-	@RequestMapping(value = "/{motCle}", method = RequestMethod.GET)
-	public Page<Utilisateur> getUserByMC(@PathVariable String motCle,
+	@RequestMapping(value = "/getParMotCle", method = RequestMethod.GET)
+	public Page<Utilisateur> getUserByMC(@RequestParam(name = "motCle", defaultValue = "") String motCle,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
 		return utilisateurRepository.findByMotCle(motCle, new PageRequest(page, size));
@@ -58,7 +58,7 @@ public class UtilisateurRestControlleur {
 	public List<Utilisateur> getUsers() {
 		return utilisateurRepository.findAll();
 	}
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
 	public Utilisateur getUserById(@PathVariable Long id) {
 		return utilisateurRepository.findOne(id);
 	}
