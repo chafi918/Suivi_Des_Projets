@@ -14,8 +14,6 @@ public class NatureMarche implements Serializable {
 	private Long idNature;
 	@NotBlank
 	private String libelleNature;
-	/*@OneToMany(mappedBy="nature")
-	private Collection<Marche> marches;*/
 	
 	public NatureMarche(String libelleNature) {
 		super();

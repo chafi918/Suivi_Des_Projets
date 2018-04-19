@@ -105,8 +105,8 @@ public class MarcheRestControlleur {
 		return marcheRepository.findByEntreprise(id, new PageRequest(page, size));
 	}
 	
-	@RequestMapping(value = "/nature/{numero}", method = RequestMethod.GET)
-	public Page<Marche> getMarchesParNumero(@PathVariable String numero,
+	@RequestMapping(value = "/numero", method = RequestMethod.GET)
+	public Page<Marche> getMarchesParNumero(@RequestParam(name = "name", defaultValue = "") String numero,
 			@RequestParam(name="page",defaultValue="0")int page,
 			@RequestParam(name="size",defaultValue="5")int size) {
 		return marcheRepository.findByNumero(numero, new PageRequest(page, size));
