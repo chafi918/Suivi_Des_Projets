@@ -25,7 +25,7 @@ public class ContactEntreprise implements Serializable {
 	@Email
 	@NotBlank
 	private String mailContact;
-	@NotBlank
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_ENTREPRISE")
 	private Entreprise entreprise;

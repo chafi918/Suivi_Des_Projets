@@ -29,11 +29,9 @@ public class ContactEntrepriseRestControlleur {
 	private EntrepriseRepository entrepriseRepository;
 
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
-	public void ajouterContact(@RequestBody ContactEntreprise contactEntreprise,
-			@RequestParam(name = "idEntreprise") Long idEntreprise) {
-		if (contactEntrepriseRepository.sameContact(idEntreprise, contactEntreprise.getNomContact()) == null
-				|| contactEntrepriseRepository.sameContact(idEntreprise, contactEntreprise.getNomContact()).isEmpty()) {
-			contactEntreprise.setEntreprise(entrepriseRepository.findOne(idEntreprise));
+	public void ajouterContact(@RequestBody ContactEntreprise contactEntreprise) {
+		if (contactEntrepriseRepository.sameContact(contactEntreprise.getNomContact()) == null
+				|| contactEntrepriseRepository.sameContact(contactEntreprise.getNomContact()).isEmpty()) {
 			contactEntrepriseRepository.save(contactEntreprise);
 		}
 	}

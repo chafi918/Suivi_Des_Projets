@@ -20,7 +20,6 @@ public interface ContactEntrepriseRepository extends JpaRepository<ContactEntrep
 	@Query("select contact from ContactEntreprise contact where contact.entreprise.idEntreprise = :x")
 	public Page<ContactEntreprise> findByEntreprise(@Param("x") Long id, Pageable p);
 
-	@Query("select contact from ContactEntreprise contact where contact.entreprise.idEntreprise = :idEntreprise "
-			+ "and contact.nomContact = :name")
-	public List<ContactEntreprise> sameContact(@Param("idEntreprise") Long idEntreprise, @Param("name") String name);
+	@Query("select contact from ContactEntreprise contact where contact.nomContact = :name")
+	public List<ContactEntreprise> sameContact(@Param("name") String name);
 }
