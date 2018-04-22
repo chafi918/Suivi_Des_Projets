@@ -21,6 +21,6 @@ public interface NatureMarcheRepository extends JpaRepository<NatureMarche, Long
 	public List<NatureMarche> searchByName(@Param("x") String label);
 	
 	@Query("select natureMarche from NatureMarche natureMarche where natureMarche.libelleNature like %:x%")
-	public Page<Division> searchByName(@Param("x") String label, Pageable p);
+	public Page<NatureMarche> searchByName(@Param("x") String label, Pageable p);
 
 }

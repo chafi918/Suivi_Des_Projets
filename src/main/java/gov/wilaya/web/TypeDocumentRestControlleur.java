@@ -30,8 +30,8 @@ public class TypeDocumentRestControlleur {
 			    typeDocumentRepository.save(typeDocument);
 		}
 	}
-	@RequestMapping(value = "/typeBN/{type}", method = RequestMethod.GET)
-	public Page<TypeDocument> getTypeByName(@PathVariable String type,
+	@RequestMapping(value = "/typeBN", method = RequestMethod.GET)
+	public Page<TypeDocument> getTypeByName(@RequestParam(name = "name", defaultValue = "")  String type,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
 		return typeDocumentRepository.findByName(type, new PageRequest(page, size));

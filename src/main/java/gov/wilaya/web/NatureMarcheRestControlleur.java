@@ -37,7 +37,7 @@ public class NatureMarcheRestControlleur {
 		return natureMarcheRepository.findAll(new PageRequest(page, size));
 	}
 	@RequestMapping(value = "/name", method = RequestMethod.GET)
-	public Page<Division> getNaturesByName(@RequestParam(name = "name", defaultValue = "") String name,
+	public Page<NatureMarche> getNaturesByName(@RequestParam(name = "name", defaultValue = "") String name,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
 		return natureMarcheRepository.searchByName(name, new PageRequest(page, size));
@@ -68,11 +68,13 @@ public class NatureMarcheRestControlleur {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void udpateNature(@PathVariable Long id, @RequestBody NatureMarche natureMarche) {
+	public boolean udpateNature(@PathVariable Long id, @RequestBody NatureMarche natureMarche) {
 		if (natureMarcheRepository.findOne(id) != null) {
 			natureMarche.setIdNature(id);
 			natureMarcheRepository.save(natureMarche);
+			return true;
 		}
+		return false;
 
 	}
 
