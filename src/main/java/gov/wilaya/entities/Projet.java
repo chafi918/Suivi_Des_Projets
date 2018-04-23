@@ -54,11 +54,11 @@ public class Projet implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_STATUT")
 	private Statut statut;
-	/*@OneToMany(mappedBy="projet",fetch=FetchType.LAZY)
+	@OneToMany(fetch=FetchType.LAZY)
 	private Collection<Observation> observations;
-	@OneToMany(mappedBy="projet",fetch=FetchType.LAZY)
+	@OneToMany(fetch=FetchType.LAZY)
 	private Collection<Document> documents;
-	@OneToMany(mappedBy="projet",fetch=FetchType.LAZY)
+	/*@OneToMany(mappedBy="projet",fetch=FetchType.LAZY)
 	private Collection<Marche> marches;*/
 	
 	public Long getIdProjet() {

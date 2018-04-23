@@ -26,12 +26,9 @@ public class DocumentRestControlleur {
 	private ProjetRepository projetRepository;
 	
 	@RequestMapping(value = "/document", method = RequestMethod.POST)
-	public void ajouterDocument(@RequestBody Document document, @RequestParam Long idProjet) {
-		if (documentRepository.searchByName(document.getNomDocument(), idProjet) == null || 
-				documentRepository.searchByName(document.getNomDocument(), idProjet).isEmpty()) {
-			document.setProjet(projetRepository.findOne(idProjet));
+	public void ajouterDocument(@RequestBody Document document) {
+		
 			documentRepository.save(document);
-		}
 	}
 	
 	@RequestMapping(value = "/documents", method = RequestMethod.GET)
@@ -82,12 +79,12 @@ public class DocumentRestControlleur {
 		documentRepository.deleteAll();
 	}
 	
-	@RequestMapping(value = "/projet/{idProjet}", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/projet/{idProjet}", method = RequestMethod.GET)
 	public Page<Document> getDocumentsByProject(@PathVariable Long idProjet,
 			@RequestParam(name="page",defaultValue="0")int page,
 			@RequestParam(name="size",defaultValue="5")int size) {
 		return documentRepository.chercherParProjet(idProjet, new PageRequest(page, size));
-	}
+	}*/
 	
 	@RequestMapping(value = "type/{idType}", method = RequestMethod.GET)
 	public Page<Document> getDocumentsByType(@PathVariable Long idType,

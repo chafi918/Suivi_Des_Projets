@@ -1,6 +1,7 @@
 package gov.wilaya.entities;
 
 import java.io.Serializable;
+
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -33,9 +34,9 @@ public class Document implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_DOC")
 	private TypeDocument type;
-	@ManyToOne(fetch = FetchType.LAZY)
+	/*@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_PROJET")
-	private Projet projet;
+	private Projet projet;*/
 
 	
 	public Document() {
@@ -87,11 +88,5 @@ public class Document implements Serializable {
 	public void setType(TypeDocument type) {
 		this.type = type;
 	}
-	public Projet getProjet() {
-		return projet;
-	}
-	public void setProjet(Projet projet) {
-		this.projet = projet;
-	}
-	
+
 }

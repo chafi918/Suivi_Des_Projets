@@ -24,8 +24,8 @@ public class ObservationRestControlleur {
 	private ProjetRepository projetRepository;
 
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
-	public void ajouterObservation(@RequestBody Observation observation, @RequestParam Long idProjet) {
-		observation.setProjet(projetRepository.findOne(idProjet));
+	public void ajouterObservation(@RequestBody Observation observation) {
+		//observation.setProjet(projetRepository.findOne(idProjet));
 		observationRepository.save(observation);
 	}
 
@@ -54,12 +54,12 @@ public class ObservationRestControlleur {
 		return false;
 	}
 
-	@RequestMapping(value = "/projet/{id}", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/projet/{id}", method = RequestMethod.GET)
 	public Page<Observation> getObservationByProjet(@PathVariable Long id,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
 		return observationRepository.findByProjet(id, new PageRequest(page, size));
-	}
+	}*/
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Observation getObservationById(@PathVariable Long id) {

@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: SuiviDesProjets
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: macbookpro
+Built-By: Oumaima
 Implementation-Vendor-Id: gov.wilaya
-Build-Jdk: 1.8.0_60
+Build-Jdk: 1.8.0_144
 Implementation-URL: http://projects.spring.io/spring-boot/SuiviDesProj
  ets/
 Created-By: Maven Integration for Eclipse

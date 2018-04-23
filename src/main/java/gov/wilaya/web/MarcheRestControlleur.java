@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import gov.wilaya.entities.Marche;
 
 @RestController
 @RequestMapping(value = "/marche")
+@CrossOrigin("*")
 public class MarcheRestControlleur { 
 	@Autowired
 	private MarcheRepository marcheRepository;
@@ -32,13 +34,12 @@ public class MarcheRestControlleur {
 	private EntrepriseRepository entrepriseRepository;
 	
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
-	public void ajouterDivision(@RequestBody Marche marche,
-			@RequestParam Long idProjet, @RequestParam Long idNature, @RequestParam Long idEntreprise) {
+	public void ajouterDivision(@RequestBody Marche marche) {
 		if (marcheRepository.searchByNumero(marche.getNumeroMarche()) == null || 
 				marcheRepository.searchByNumero(marche.getNumeroMarche()).isEmpty()) {
-			marche.setEntreprise(entrepriseRepository.findOne(idEntreprise));
-			marche.setProjet(projetRepository.findOne(idProjet));
-			marche.setNature(natureMarcheRepository.findOne(idNature));
+			//marche.setEntreprise(entrepriseRepository.findOne(idEntreprise));
+			//marche.setProjet(projetRepository.findOne(idProjet));
+			//marche.setNature(natureMarcheRepository.findOne(idNature));
 			marcheRepository.save(marche);
 		}
 	}
