@@ -3,6 +3,7 @@ package gov.wilaya.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.wilaya.dao.ObservationRepository;
 import gov.wilaya.dao.ProjetRepository;
+import gov.wilaya.entities.Document;
 import gov.wilaya.entities.Observation;
 
 @RestController
 @RequestMapping(value = "/observation")
+@CrossOrigin("*")
 public class ObservationRestControlleur {
 
 	@Autowired
@@ -42,6 +45,12 @@ public class ObservationRestControlleur {
 	@RequestMapping(value = "supprimerObservations", method = RequestMethod.DELETE)
 	public void supprimerMarches() {
 		observationRepository.deleteAll();
+	}
+	
+	@RequestMapping(value = "/getObservations", method = RequestMethod.GET)
+	public Page<Observation> getObservations(@RequestParam(name="page",defaultValue="0")int page,
+			@RequestParam(name="size",defaultValue="5")int size){
+		return observationRepository.findAll(new PageRequest(page, size));
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
