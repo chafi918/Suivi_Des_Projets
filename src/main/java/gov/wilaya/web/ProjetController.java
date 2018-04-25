@@ -39,9 +39,7 @@ public class ProjetController {
 		return projetRepository.findAll(new PageRequest(page, size));
 	}
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
-	public void ajouterProjet(@RequestBody Projet projet,@RequestParam Long idStatut,@RequestParam Long idSecteur) {
-		projet.setSecteur(secteurRepository.findOne(idSecteur));
-		projet.setStatut(statutRepository.findOne(idStatut));
+	public void ajouterProjet(@RequestBody Projet projet) {
 		projetRepository.save(projet);
 	}
 	
