@@ -22,8 +22,8 @@ public interface MarcheRepository extends JpaRepository<Marche, Long> {
 	@Query("select marche from Marche marche where marche.nature.idNature = :x")
 	public Page<Marche> findByNature(@Param("x") Long idNature, Pageable p);
 	
-	@Query("select marche from Marche marche where marche.projet.idProjet = :x")
-	public Page<Marche> findByProjet(@Param("x") Long idProjet, Pageable p);
+	/*@Query("select marche from Marche marche where marche.projet.idProjet = :x")
+	public Page<Marche> findByProjet(@Param("x") Long idProjet, Pageable p);*/
 	
 	@Query("select marche from Marche marche where marche.entreprise.idEntreprise = :x")
 	public Page<Marche> findByEntreprise(@Param("x") Long idEntreprise, Pageable p);

@@ -16,6 +16,10 @@ import javax.persistence.TemporalType;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 public class Observation implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -26,7 +30,7 @@ public class Observation implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date dateObservation;
 	@NotBlank
-	private String nomObservant;	
+	private String nomObservant;
 	
 	public Observation() {
 		super();
@@ -38,6 +42,8 @@ public class Observation implements Serializable {
 		this.dateObservation = dateObservation;
 		this.nomObservant = nomObservant;
 	}
+
+
 	public Long getIdObservation() {
 		return idObservation;
 	}

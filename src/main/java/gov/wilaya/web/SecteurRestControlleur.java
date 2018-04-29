@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.wilaya.dao.ProjetRepository;
 import gov.wilaya.dao.SecteurRepository;
 import gov.wilaya.entities.Secteur;
 
@@ -22,6 +23,9 @@ import gov.wilaya.entities.Secteur;
 public class SecteurRestControlleur {
 	@Autowired
 	private SecteurRepository secteurRepository;
+	
+	@Autowired
+	private ProjetRepository projetRepository;
 
 	@RequestMapping(value = "/secteur", method = RequestMethod.POST)
 	public void ajouterSecteur(@RequestBody Secteur secteur) {
@@ -53,6 +57,11 @@ public class SecteurRestControlleur {
 	@RequestMapping(value = "secteur/{id}", method = RequestMethod.GET)
 	public Secteur getSecteur(@PathVariable Long id) {
 		return secteurRepository.findOne(id);
+	}
+	
+	@RequestMapping(value = "/secteur", method = RequestMethod.GET)
+	public Secteur getSecteurByProjet(@RequestParam(name = "idProjet") Long idProjet) {
+		return projetRepository.findOne(idProjet).getSecteur();
 	}
 
 	@RequestMapping(value = "secteurs/{id}", method = RequestMethod.DELETE)

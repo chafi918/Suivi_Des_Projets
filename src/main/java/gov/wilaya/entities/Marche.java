@@ -12,6 +12,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 public class Marche implements Serializable {
 	
@@ -32,9 +36,6 @@ public class Marche implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="ID_NATUREMARCHE")
 	private NatureMarche nature;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_PROJET")
-	private Projet projet;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_ENTREPRISE")
 	private Entreprise entreprise;
@@ -97,12 +98,7 @@ public class Marche implements Serializable {
 	public void setNature(NatureMarche nature) {
 		this.nature = nature;
 	}
-	public Projet getProjet() {
-		return projet;
-	}
-	public void setProjet(Projet projet) {
-		this.projet = projet;
-	}
+	
 	public Entreprise getEntreprise() {
 		return entreprise;
 	}

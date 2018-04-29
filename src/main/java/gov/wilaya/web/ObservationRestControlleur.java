@@ -63,11 +63,12 @@ public class ObservationRestControlleur {
 		return false;
 	}
 
-/*	@RequestMapping(value = "/projet/{id}", method = RequestMethod.GET)
-	public Page<Observation> getObservationByProjet(@PathVariable Long id,
+	/*@RequestMapping(value = "/projet", method = RequestMethod.GET)
+	public Page<Observation> getObservationByProjet(@RequestParam(name = "idProjet") Long idProjet,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
-		return observationRepository.findByProjet(id, new PageRequest(page, size));
+		
+		return observationRepository.findByProjet(idProjet, new PageRequest(page, size));
 	}*/
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

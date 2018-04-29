@@ -21,7 +21,10 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Projet implements Serializable {
@@ -58,12 +61,37 @@ public class Projet implements Serializable {
 	private Collection<Observation> observations;
 	@OneToMany(fetch=FetchType.LAZY)
 	private Collection<Document> documents;
-	/*@OneToMany(mappedBy="projet",fetch=FetchType.LAZY)
-	private Collection<Marche> marches;*/
+	@OneToMany(fetch=FetchType.LAZY)
+	private Collection<Marche> marches;
 	
+	
+	public Collection<Document> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(Collection<Document> documents) {
+		this.documents = documents;
+	}
+
+	public Collection<Marche> getMarches() {
+		return marches;
+	}
+
+	public void setMarches(Collection<Marche> marches) {
+		this.marches = marches;
+	}
+
 	public Long getIdProjet() {
 		return idProjet;
 	}
+	
+	public Collection<Observation> getObservations() {
+		return observations;
+	}
+	public void setObservations(Collection<Observation> observations) {
+		this.observations = observations;
+	}
+	
 	public void setIdProjet(Long idProjet) {
 		this.idProjet = idProjet;
 	}

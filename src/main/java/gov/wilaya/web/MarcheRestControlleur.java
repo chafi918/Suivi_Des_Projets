@@ -37,9 +37,6 @@ public class MarcheRestControlleur {
 	public void ajouterDivision(@RequestBody Marche marche) {
 		if (marcheRepository.searchByNumero(marche.getNumeroMarche()) == null || 
 				marcheRepository.searchByNumero(marche.getNumeroMarche()).isEmpty()) {
-			//marche.setEntreprise(entrepriseRepository.findOne(idEntreprise));
-			//marche.setProjet(projetRepository.findOne(idProjet));
-			//marche.setNature(natureMarcheRepository.findOne(idNature));
 			marcheRepository.save(marche);
 		}
 	}
@@ -92,12 +89,12 @@ public class MarcheRestControlleur {
 		return marcheRepository.findByNature(id, new PageRequest(page, size));
 	}
 	
-	@RequestMapping(value = "/projet/{id}", method = RequestMethod.GET)
-	public Page<Marche> getMarchesParProjet(@PathVariable Long id,
+	/*@RequestMapping(value = "/projet", method = RequestMethod.GET)
+	public Page<Marche> getMarchesParProjet(@RequestParam(name="idProjet")Long idProjet,
 			@RequestParam(name="page",defaultValue="0")int page,
 			@RequestParam(name="size",defaultValue="5")int size) {
-		return marcheRepository.findByProjet(id, new PageRequest(page, size));
-	}
+		return marcheRepository.findByProjet(idProjet, new PageRequest(page, size));
+	}*/
 	
 	@RequestMapping(value = "/entreprise/{id}", method = RequestMethod.GET)
 	public Page<Marche> getMarchesParEntreprise(@PathVariable Long id,

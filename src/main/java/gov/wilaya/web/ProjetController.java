@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.wilaya.dao.ObservationRepository;
 import gov.wilaya.dao.ProjetRepository;
 import gov.wilaya.dao.SecteurRepository;
 import gov.wilaya.dao.StatutRepository;
@@ -25,9 +26,8 @@ public class ProjetController {
 	@Autowired
 	private ProjetRepository projetRepository;
 	@Autowired
-	private SecteurRepository secteurRepository;
-	@Autowired
-	private StatutRepository statutRepository;
+	private ObservationRepository observationRepository;
+	
 	@RequestMapping("/all") 
 	public List<Projet> getProduits(){ 
 		return projetRepository.findAll(); 
@@ -52,9 +52,11 @@ public class ProjetController {
 		}
 		return false;
 	}
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Projet getProjetById(@PathVariable Long id) {
-		return projetRepository.findOne(id);
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public Projet getProjetById(@RequestParam(name = "id") Long id) {
+		Projet projet = projetRepository.findOne(id); 
+		System.out.println(projet.getIntitule());
+		return projet;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

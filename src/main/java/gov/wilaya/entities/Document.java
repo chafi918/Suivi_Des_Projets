@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class Document implements Serializable {
 	
@@ -34,22 +35,19 @@ public class Document implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_DOC")
 	private TypeDocument type;
-	/*@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_PROJET")
-	private Projet projet;*/
 
 	
 	public Document() {
 		super();
 	}
-	public Document(String nomDocument, Date dateAjout,byte[] contenu, String utilisateur, TypeDocument type) {
+	public Document(String nomDocument, Date dateAjout,byte[] contenu, String utilisateur, 
+			TypeDocument type) {
 		super();
 		this.nomDocument = nomDocument;
 		this.dateAjout = dateAjout;
 		this.contenu = contenu;
 		this.chargeurDocument = utilisateur;
 		this.type = type;
-		
 	}
 	
 	public byte[] getContenu() {
