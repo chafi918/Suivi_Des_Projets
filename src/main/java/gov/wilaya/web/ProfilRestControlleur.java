@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gov.wilaya.dao.ProfilRepository;
 import gov.wilaya.entities.Profil;
-import gov.wilaya.entities.Secteur;
 
 @RestController
 @RequestMapping(value = "/adminProfil")

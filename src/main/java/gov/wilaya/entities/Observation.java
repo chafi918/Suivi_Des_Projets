@@ -1,10 +1,10 @@
 package gov.wilaya.entities;
 
 import java.io.Serializable;
-
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,10 +15,6 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 public class Observation implements Serializable {
@@ -31,6 +27,9 @@ public class Observation implements Serializable {
 	private Date dateObservation;
 	@NotBlank
 	private String nomObservant;
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "idProjet")
+	private Projet projet;
 	
 	public Observation() {
 		super();
@@ -43,7 +42,12 @@ public class Observation implements Serializable {
 		this.nomObservant = nomObservant;
 	}
 
-
+	public Projet getProjet() {
+		return projet;
+	}
+	public void setProjet(Projet projet) {
+		this.projet = projet;
+	}
 	public Long getIdObservation() {
 		return idObservation;
 	}

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.wilaya.dao.EntrepriseRepository;
-import gov.wilaya.entities.ContactEntreprise;
 import gov.wilaya.entities.Entreprise;
 
 @RestController

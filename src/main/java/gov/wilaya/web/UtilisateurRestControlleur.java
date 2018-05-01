@@ -27,7 +27,7 @@ public class UtilisateurRestControlleur {
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouter(@RequestBody Utilisateur utilisateur) {
 		if ( utilisateurRepository.searchByLogin(utilisateur.getLoginUser()) == null || 
-				utilisateurRepository.searchByLogin(utilisateur.getLoginUser()).isEmpty()){ 
+				utilisateurRepository.searchByLogin(utilisateur.getLoginUser()).isEmpty()){
 			     utilisateurRepository.save(utilisateur);
 		}
 	}

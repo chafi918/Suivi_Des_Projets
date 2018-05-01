@@ -1,8 +1,9 @@
 package gov.wilaya.entities;
 
 import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,10 +13,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 public class Marche implements Serializable {
 	
@@ -33,12 +30,15 @@ public class Marche implements Serializable {
 	private String delaiExecution;
 	@NotNull
 	private float tauxAvancement;
-	@ManyToOne
-	@JoinColumn(name="ID_NATUREMARCHE")
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "idNature")
 	private NatureMarche nature;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_ENTREPRISE")
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "idEntreprise")
 	private Entreprise entreprise;
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "idProjet")
+	private Projet projet;
 	
 	public Marche(String numeroMarche, double montantMarche, double montantTravauxRealises, String delaiExecution,
 			float tauxAvancement,NatureMarche nature) {
@@ -54,6 +54,15 @@ public class Marche implements Serializable {
 	public Marche() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	
+	public Projet getProjet() {
+		return projet;
+	}
+
+	public void setProjet(Projet projet) {
+		this.projet = projet;
 	}
 
 	public Long getIdMarche() {

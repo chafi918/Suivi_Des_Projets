@@ -1,18 +1,15 @@
 package gov.wilaya.entities;
 
 import java.io.Serializable;
-
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
@@ -21,11 +18,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Projet implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -50,46 +42,16 @@ public class Projet implements Serializable {
 	private Date dateAO;
 	private boolean estMasque;
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_SECTEUR")
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "idSecteur")
 	private Secteur secteur;
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_STATUT")
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "idStatut")
 	private Statut statut;
-	@OneToMany(fetch=FetchType.LAZY)
-	private Collection<Observation> observations;
-	@OneToMany(fetch=FetchType.LAZY)
-	private Collection<Document> documents;
-	@OneToMany(fetch=FetchType.LAZY)
-	private Collection<Marche> marches;
-	
-	
-	public Collection<Document> getDocuments() {
-		return documents;
-	}
-
-	public void setDocuments(Collection<Document> documents) {
-		this.documents = documents;
-	}
-
-	public Collection<Marche> getMarches() {
-		return marches;
-	}
-
-	public void setMarches(Collection<Marche> marches) {
-		this.marches = marches;
-	}
 
 	public Long getIdProjet() {
 		return idProjet;
-	}
-	
-	public Collection<Observation> getObservations() {
-		return observations;
-	}
-	public void setObservations(Collection<Observation> observations) {
-		this.observations = observations;
 	}
 	
 	public void setIdProjet(Long idProjet) {

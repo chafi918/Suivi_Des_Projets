@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.wilaya.dao.DocumentRepository;
-import gov.wilaya.dao.ProjetRepository;
 import gov.wilaya.entities.Document;
 
 @RestController
@@ -23,9 +22,6 @@ import gov.wilaya.entities.Document;
 public class DocumentRestControlleur {
 	@Autowired
 	private DocumentRepository documentRepository;
-	
-	@Autowired
-	private ProjetRepository projetRepository;
 	
 	@RequestMapping(value = "/document", method = RequestMethod.POST)
 	public void ajouterDocument(@RequestBody Document document) {

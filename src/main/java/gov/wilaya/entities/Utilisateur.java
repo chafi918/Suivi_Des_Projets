@@ -1,22 +1,19 @@
 package gov.wilaya.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+
 @Entity 
 public class Utilisateur implements Serializable{
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -36,13 +33,11 @@ public class Utilisateur implements Serializable{
 	private String responsabilite;
 	@NotNull
 	private boolean estActive;
-	//@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_DIVISION")
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "idDivision")
 	private Division division;
-	//@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_PROFIL")
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "idProfil")
     private Profil profil;
 
 	public Utilisateur(String nomUser, String prenomUser, String mailUser, String loginUser, String mdpUser,
@@ -67,6 +62,7 @@ public class Utilisateur implements Serializable{
 	public Long getIdUser() {
 		return idUser;
 	}
+	
 	public void setIdUser(Long idUser) {
 		this.idUser = idUser;
 	}

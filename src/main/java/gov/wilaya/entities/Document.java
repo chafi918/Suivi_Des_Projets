@@ -1,11 +1,10 @@
 package gov.wilaya.entities;
 
 import java.io.Serializable;
-
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,10 +31,12 @@ public class Document implements Serializable {
 	private byte[] contenu;
 	@NotBlank
 	private String chargeurDocument;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_DOC")
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "idType")
 	private TypeDocument type;
-
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "idProjet")
+	private Projet projet;
 	
 	public Document() {
 		super();

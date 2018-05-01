@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.wilaya.dao.ObservationRepository;
-import gov.wilaya.dao.ProjetRepository;
-import gov.wilaya.entities.Document;
 import gov.wilaya.entities.Observation;
 
 @RestController
@@ -23,12 +21,9 @@ public class ObservationRestControlleur {
 
 	@Autowired
 	private ObservationRepository observationRepository;
-	@Autowired
-	private ProjetRepository projetRepository;
 
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouterObservation(@RequestBody Observation observation) {
-		//observation.setProjet(projetRepository.findOne(idProjet));
 		observationRepository.save(observation);
 	}
 

@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import gov.wilaya.dao.ObservationRepository;
 import gov.wilaya.dao.ProjetRepository;
-import gov.wilaya.dao.SecteurRepository;
-import gov.wilaya.dao.StatutRepository;
 import gov.wilaya.entities.Projet;
 
 @RestController
@@ -25,8 +22,6 @@ import gov.wilaya.entities.Projet;
 public class ProjetController {
 	@Autowired
 	private ProjetRepository projetRepository;
-	@Autowired
-	private ObservationRepository observationRepository;
 	
 	@RequestMapping("/all") 
 	public List<Projet> getProduits(){ 
@@ -54,9 +49,7 @@ public class ProjetController {
 	}
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public Projet getProjetById(@RequestParam(name = "id") Long id) {
-		Projet projet = projetRepository.findOne(id); 
-		System.out.println(projet.getIntitule());
-		return projet;
+		return projetRepository.findOne(id);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

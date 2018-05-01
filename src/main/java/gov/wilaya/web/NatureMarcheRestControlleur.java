@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.wilaya.dao.NatureMarcheRepository;
-import gov.wilaya.entities.Division;
 import gov.wilaya.entities.NatureMarche;
 @RestController
 @RequestMapping(value = "/adminNature")

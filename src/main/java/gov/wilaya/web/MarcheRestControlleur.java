@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import gov.wilaya.dao.EntrepriseRepository;
 import gov.wilaya.dao.MarcheRepository;
-import gov.wilaya.dao.NatureMarcheRepository;
-import gov.wilaya.dao.ProjetRepository;
 import gov.wilaya.entities.Marche;
 
 
@@ -26,12 +23,6 @@ import gov.wilaya.entities.Marche;
 public class MarcheRestControlleur { 
 	@Autowired
 	private MarcheRepository marcheRepository;
-	@Autowired
-	private ProjetRepository projetRepository;
-	@Autowired
-	private NatureMarcheRepository natureMarcheRepository;
-	@Autowired
-	private EntrepriseRepository entrepriseRepository;
 	
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouterDivision(@RequestBody Marche marche) {
@@ -46,6 +37,7 @@ public class MarcheRestControlleur {
 			@RequestParam(name="size",defaultValue="5")int size) {
 		return marcheRepository.findAll(new PageRequest(page, size));
 	}
+	
 	
 	@RequestMapping(value = "/allMarches", method = RequestMethod.GET)
 	public List<Marche> getMarches() {
@@ -88,13 +80,15 @@ public class MarcheRestControlleur {
 			@RequestParam(name="size",defaultValue="5")int size) {
 		return marcheRepository.findByNature(id, new PageRequest(page, size));
 	}
-	
-	/*@RequestMapping(value = "/projet", method = RequestMethod.GET)
-	public Page<Marche> getMarchesParProjet(@RequestParam(name="idProjet")Long idProjet,
+		
+	@RequestMapping(value = "/projet", method = RequestMethod.GET)
+	public Page<Marche> getMarchesParProjet(
+			@RequestParam(name="idProjet")Long idProjet,
 			@RequestParam(name="page",defaultValue="0")int page,
 			@RequestParam(name="size",defaultValue="5")int size) {
+		System.out.println(idProjet);
 		return marcheRepository.findByProjet(idProjet, new PageRequest(page, size));
-	}*/
+	}
 	
 	@RequestMapping(value = "/entreprise/{id}", method = RequestMethod.GET)
 	public Page<Marche> getMarchesParEntreprise(@PathVariable Long id,
@@ -105,8 +99,10 @@ public class MarcheRestControlleur {
 	
 	@RequestMapping(value = "/numero", method = RequestMethod.GET)
 	public Page<Marche> getMarchesParNumero(@RequestParam(name = "name", defaultValue = "") String numero,
+			@RequestParam(name="idProjet")Long idProjet,
 			@RequestParam(name="page",defaultValue="0")int page,
 			@RequestParam(name="size",defaultValue="5")int size) {
-		return marcheRepository.findByNumero(numero, new PageRequest(page, size));
+		System.out.println("id: "+ idProjet + " numero: " + numero);
+		return marcheRepository.findByNumero(numero,idProjet, new PageRequest(page, size));
 	}
 }
