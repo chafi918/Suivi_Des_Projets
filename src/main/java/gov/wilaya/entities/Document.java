@@ -35,6 +35,9 @@ public class Document implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_DOC")
 	private TypeDocument type;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="ID_PROJET")
+	private Projet projet;
 
 	
 	public Document() {

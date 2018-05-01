@@ -88,11 +88,11 @@ public class DocumentRestControlleur {
 		return documentRepository.chercherParProjet(idProjet, new PageRequest(page, size));
 	}*/
 	
-	@RequestMapping(value = "type/{idType}", method = RequestMethod.GET)
-	public Page<Document> getDocumentsByType(@PathVariable Long idType,
+	@RequestMapping(value = "/type", method = RequestMethod.GET)
+	public Page<Document> getDocumentsByType(@RequestParam(name = "typeDocument", defaultValue = "")  String typeDocument,
 			@RequestParam(name="page",defaultValue="0")int page,
 			@RequestParam(name="size",defaultValue="5")int size) {
-		return documentRepository.chercherParType(idType, new PageRequest(page, size));
+		return documentRepository.chercherParType(typeDocument, new PageRequest(page, size));
 	}
 	
 	@RequestMapping(value = "/chargeur/{chargeur}", method = RequestMethod.GET)

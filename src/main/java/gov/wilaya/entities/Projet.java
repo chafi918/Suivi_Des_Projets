@@ -57,39 +57,15 @@ public class Projet implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_STATUT")
 	private Statut statut;
-	@OneToMany(fetch=FetchType.LAZY)
+	/*@OneToMany(fetch=FetchType.LAZY)
 	private Collection<Observation> observations;
 	@OneToMany(fetch=FetchType.LAZY)
 	private Collection<Document> documents;
-	@OneToMany(fetch=FetchType.LAZY)
-	private Collection<Marche> marches;
-	
-	
-	public Collection<Document> getDocuments() {
-		return documents;
-	}
-
-	public void setDocuments(Collection<Document> documents) {
-		this.documents = documents;
-	}
-
-	public Collection<Marche> getMarches() {
-		return marches;
-	}
-
-	public void setMarches(Collection<Marche> marches) {
-		this.marches = marches;
-	}
+	@OneToMany(mappedBy="projet",fetch=FetchType.LAZY)
+	private Collection<Marche> marches;*/
 
 	public Long getIdProjet() {
 		return idProjet;
-	}
-	
-	public Collection<Observation> getObservations() {
-		return observations;
-	}
-	public void setObservations(Collection<Observation> observations) {
-		this.observations = observations;
 	}
 	
 	public void setIdProjet(Long idProjet) {

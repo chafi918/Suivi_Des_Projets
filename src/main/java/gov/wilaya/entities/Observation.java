@@ -31,6 +31,9 @@ public class Observation implements Serializable {
 	private Date dateObservation;
 	@NotBlank
 	private String nomObservant;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="ID_PROJET")
+	private Projet projet;
 	
 	public Observation() {
 		super();

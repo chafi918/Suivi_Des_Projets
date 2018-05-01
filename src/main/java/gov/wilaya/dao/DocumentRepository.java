@@ -19,8 +19,8 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
 	@Query("select document from Document document where document.nomDocument like :x ")
 	public List<Document> searchByName(@Param("x") String nomDocument);
 	
-	@Query("select document from Document document where document.type.idTypeDoc = :x")
-	public Page<Document> chercherParType(@Param("x") Long idTypeDocument, Pageable p);
+	@Query("select document from Document document where document.type.libelleType like %:x% ")
+	public Page<Document> chercherParType(@Param("x") String typeDocument, Pageable p);
 
 	/*@Query("select document from Document document where document.projet.idProjet = :x")
 	public Page<Document> chercherParProjet(@Param("x") Long idProjet, Pageable p);

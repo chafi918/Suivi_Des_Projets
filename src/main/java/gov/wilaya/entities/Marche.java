@@ -39,6 +39,9 @@ public class Marche implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_ENTREPRISE")
 	private Entreprise entreprise;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="ID_PROJET")
+	private Projet projet;
 	
 	public Marche(String numeroMarche, double montantMarche, double montantTravauxRealises, String delaiExecution,
 			float tauxAvancement,NatureMarche nature) {
