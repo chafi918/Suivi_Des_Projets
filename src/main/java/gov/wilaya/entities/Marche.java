@@ -114,4 +114,13 @@ public class Marche implements Serializable {
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
 	}
+
+	@Override
+	public String toString() {
+		return "Marche [idMarche=" + idMarche + ", numeroMarche=" + numeroMarche + ", montantMarche=" + montantMarche
+				+ ", montantTravauxRealises=" + montantTravauxRealises + ", delaiExecution=" + delaiExecution
+				+ ", tauxAvancement=" + tauxAvancement + ", nature=" + nature + ", entreprise=" + entreprise
+				+ ", projet=" + projet + "]";
+	}
+	
 }

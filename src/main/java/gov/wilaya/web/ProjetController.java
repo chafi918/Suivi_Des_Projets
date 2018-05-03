@@ -1,7 +1,5 @@
 package gov.wilaya.web;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,11 +21,6 @@ public class ProjetController {
 	@Autowired
 	private ProjetRepository projetRepository;
 	
-	@RequestMapping("/all") 
-	public List<Projet> getProduits(){ 
-		return projetRepository.findAll(); 
-	}
-	
 	@RequestMapping(value = "/getProjets", method = RequestMethod.GET)
 	public Page<Projet> getProjets(@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
@@ -47,8 +40,9 @@ public class ProjetController {
 		}
 		return false;
 	}
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public Projet getProjetById(@RequestParam(name = "id") Long id) {
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public Projet getProjetById(@PathVariable Long id) {
+		System.out.println("getProjet:" + id);
 		return projetRepository.findOne(id);
 	}
 

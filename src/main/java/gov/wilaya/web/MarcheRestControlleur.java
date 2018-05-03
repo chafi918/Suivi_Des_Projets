@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.wilaya.beans.InputMarche;
 import gov.wilaya.dao.MarcheRepository;
+import gov.wilaya.dao.ProjetRepository;
 import gov.wilaya.entities.Marche;
 
 
@@ -23,11 +25,15 @@ import gov.wilaya.entities.Marche;
 public class MarcheRestControlleur { 
 	@Autowired
 	private MarcheRepository marcheRepository;
+	@Autowired
+	private ProjetRepository projetRepository;
 	
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
-	public void ajouterDivision(@RequestBody Marche marche) {
+	public void ajouterDivision(@RequestBody InputMarche inputmarche) {
+		Marche marche = inputmarche.getMarche();
 		if (marcheRepository.searchByNumero(marche.getNumeroMarche()) == null || 
 				marcheRepository.searchByNumero(marche.getNumeroMarche()).isEmpty()) {
+			marche.setProjet(projetRepository.findOne(inputmarche.getIdProjet()));
 			marcheRepository.save(marche);
 		}
 	}
@@ -86,7 +92,6 @@ public class MarcheRestControlleur {
 			@RequestParam(name="idProjet")Long idProjet,
 			@RequestParam(name="page",defaultValue="0")int page,
 			@RequestParam(name="size",defaultValue="5")int size) {
-		System.out.println(idProjet);
 		return marcheRepository.findByProjet(idProjet, new PageRequest(page, size));
 	}
 	
@@ -102,7 +107,6 @@ public class MarcheRestControlleur {
 			@RequestParam(name="idProjet")Long idProjet,
 			@RequestParam(name="page",defaultValue="0")int page,
 			@RequestParam(name="size",defaultValue="5")int size) {
-		System.out.println("id: "+ idProjet + " numero: " + numero);
 		return marcheRepository.findByNumero(numero,idProjet, new PageRequest(page, size));
 	}
 }

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.wilaya.beans.InputObservation;
 import gov.wilaya.dao.ObservationRepository;
+import gov.wilaya.dao.ProjetRepository;
 import gov.wilaya.entities.Observation;
 
 @RestController
@@ -22,8 +24,13 @@ public class ObservationRestControlleur {
 	@Autowired
 	private ObservationRepository observationRepository;
 
+	@Autowired
+	private ProjetRepository projetRepository;
+	
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
-	public void ajouterObservation(@RequestBody Observation observation) {
+	public void ajouterObservation(@RequestBody InputObservation inputObservation) {
+		Observation observation = inputObservation.getObservation();
+		observation.setProjet(projetRepository.findOne(inputObservation.getIdProjet()));
 		observationRepository.save(observation);
 	}
 
@@ -58,13 +65,12 @@ public class ObservationRestControlleur {
 		return false;
 	}
 
-	/*@RequestMapping(value = "/projet", method = RequestMethod.GET)
+	@RequestMapping(value = "/projet", method = RequestMethod.GET)
 	public Page<Observation> getObservationByProjet(@RequestParam(name = "idProjet") Long idProjet,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
-		
 		return observationRepository.findByProjet(idProjet, new PageRequest(page, size));
-	}*/
+	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Observation getObservationById(@PathVariable Long id) {
