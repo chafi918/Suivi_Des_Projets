@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,19 +14,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.wilaya.beans.InputDocument;
 import gov.wilaya.dao.DocumentRepository;
+import gov.wilaya.dao.ProjetRepository;
 import gov.wilaya.entities.Document;
 
 @RestController
-@RequestMapping(value = "/adminDocument")
+@RequestMapping(value = "/document")
 @CrossOrigin("*")
 public class DocumentRestControlleur {
 	@Autowired
 	private DocumentRepository documentRepository;
+	@Autowired
+	private ProjetRepository projetRepository;
 	
-	@RequestMapping(value = "/document", method = RequestMethod.POST)
-	public void ajouterDocument(@RequestBody Document document) {
-		
+	@RequestMapping(value = "/ajout", method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void ajouterDocument(@RequestBody InputDocument inputDocument) {
+		Document document = inputDocument.getDocument();
+			System.out.println("idProjet pour le document: " + inputDocument.getIdProjet());
+			System.out.println("nom pour le document: " + inputDocument.getDocument().getNomDocument());
+			System.out.println("contenu pour le document: " + inputDocument.getContenu());
+			System.out.println("bytes: "+inputDocument.getContenu().getBytes().toString());
+			
+			document.setProjet(projetRepository.findOne(inputDocument.getIdProjet()));
+			document.setContenu(inputDocument.getContenu().getBytes());
 			documentRepository.save(document);
 	}
 	
@@ -77,12 +90,14 @@ public class DocumentRestControlleur {
 		documentRepository.deleteAll();
 	}
 	
-/*	@RequestMapping(value = "/projet/{idProjet}", method = RequestMethod.GET)
-	public Page<Document> getDocumentsByProject(@PathVariable Long idProjet,
+	@RequestMapping(value = "/projet", method = RequestMethod.GET)
+	public Page<Document> getDocumentsByProject(
+			@RequestParam(name = "idProjet") Long idProjet,
 			@RequestParam(name="page",defaultValue="0")int page,
 			@RequestParam(name="size",defaultValue="5")int size) {
+		System.out.println("get documents du projet : " + idProjet);
 		return documentRepository.chercherParProjet(idProjet, new PageRequest(page, size));
-	}*/
+	}
 	
 	@RequestMapping(value = "/type", method = RequestMethod.GET)
 	public Page<Document> getDocumentsByType(@RequestParam(name = "typeDocument", defaultValue = "")  String typeDocument,

@@ -29,6 +29,7 @@ public class ObservationRestControlleur {
 	
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouterObservation(@RequestBody InputObservation inputObservation) {
+		
 		Observation observation = inputObservation.getObservation();
 		observation.setProjet(projetRepository.findOne(inputObservation.getIdProjet()));
 		observationRepository.save(observation);

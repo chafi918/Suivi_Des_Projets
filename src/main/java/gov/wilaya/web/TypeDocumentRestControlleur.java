@@ -39,7 +39,10 @@ public class TypeDocumentRestControlleur {
 	@RequestMapping(value = "/getAllTypes", method = RequestMethod.GET)
 	public Page<TypeDocument> getTypesDocuments(@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
-		return typeDocumentRepository.findAll(new PageRequest(page, size));
+		System.out.println("send all types of documents");
+		Page<TypeDocument> p = typeDocumentRepository.findAll(new PageRequest(page, size));
+		System.out.println("total types: "+p.getTotalElements());
+		return p;
 	}
 	@RequestMapping(value = "/allTypes", method = RequestMethod.GET)
 	public List<TypeDocument> getTypesDocuments() {
