@@ -26,6 +26,10 @@ public class Projet implements Serializable {
 	private String intitule;
 	@NotBlank
 	private String commune;
+	@NotBlank
+	private String province;
+	@NotNull
+	private float tauxAvancement;
 	@NotNull
 	@Min(value=0)
 	private double montantProgramme;
@@ -45,6 +49,21 @@ public class Projet implements Serializable {
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "idSecteur")
 	private Secteur secteur;
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public float getTauxAvancement() {
+		return tauxAvancement;
+	}
+
+	public void setTauxAvancement(float tauxAvancement) {
+		this.tauxAvancement = tauxAvancement;
+	}
 	@NotNull
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "idStatut")
@@ -124,11 +143,12 @@ public class Projet implements Serializable {
 		this.statut = statut;
 	}
 
-	public Projet(String intitule, String commune, double montantProgramme, boolean estProjetRoyal, Date dateAO,
+	public Projet(String intitule, String commune,String province, double montantProgramme, boolean estProjetRoyal, Date dateAO,
 			boolean estMasque, Statut statut, Secteur secteur) {
 		super();
 		this.intitule = intitule;
 		this.commune = commune;
+		this.province = province;
 		this.montantProgramme = montantProgramme;
 		this.estProjetRoyal = estProjetRoyal;
 		this.dateAO = dateAO;

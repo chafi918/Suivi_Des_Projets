@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gov.wilaya.dao.ContactEntrepriseRepository;
+import gov.wilaya.dao.EntrepriseRepository;
+import gov.wilaya.dao.MarcheRepository;
 import gov.wilaya.entities.ContactEntreprise;
+import gov.wilaya.entities.Entreprise;
 
 @RestController
 @RequestMapping(value = "/contact")
@@ -23,7 +26,11 @@ public class ContactEntrepriseRestControlleur {
 
 	@Autowired
 	private ContactEntrepriseRepository contactEntrepriseRepository;
-
+	@Autowired
+	private EntrepriseRepository entrepriseRepository;
+	@Autowired
+	private MarcheRepository marcheRepository;
+	
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouterContact(@RequestBody ContactEntreprise contactEntreprise) {
 		if (contactEntrepriseRepository.sameContact(contactEntreprise.getNomContact()) == null
@@ -48,8 +55,18 @@ public class ContactEntrepriseRestControlleur {
 		return contactEntrepriseRepository.findOne(id);
 	}
 
-	@RequestMapping(value = "/entreprise/{idEntreprise}", method = RequestMethod.GET)
-	public Page<ContactEntreprise> getContactByEntreprise(@PathVariable Long idEntreprise,
+	@RequestMapping(value = "/marche", method = RequestMethod.GET)
+	public Page<ContactEntreprise> getContactByMarche(@RequestParam(name = "idMarche" )  Long idMarche,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
+		Entreprise entreprise = entrepriseRepository.findOne(
+				marcheRepository.findOne(idMarche).getEntreprise().getIdEntreprise()
+				);
+		return contactEntrepriseRepository.findByEntreprise(entreprise.getIdEntreprise(), new PageRequest(page, size));
+	}
+	
+	@RequestMapping(value = "/entreprise", method = RequestMethod.GET)
+	public Page<ContactEntreprise> getContactByEntreprise(@RequestParam(name = "idEntreprise" )  Long idEntreprise,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
 		return contactEntrepriseRepository.findByEntreprise(idEntreprise, new PageRequest(page, size));

@@ -3,6 +3,7 @@ package gov.wilaya.dao;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +23,5 @@ public interface ContactEntrepriseRepository extends JpaRepository<ContactEntrep
 
 	@Query("select contact from ContactEntreprise contact where contact.nomContact = :name")
 	public List<ContactEntreprise> sameContact(@Param("name") String name);
+
 }

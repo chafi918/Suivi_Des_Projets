@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import gov.wilaya.beans.InputMarche;
 import gov.wilaya.dao.MarcheRepository;
 import gov.wilaya.dao.ProjetRepository;
+import gov.wilaya.entities.Entreprise;
 import gov.wilaya.entities.Marche;
 
 
@@ -55,6 +56,12 @@ public class MarcheRestControlleur {
 		return marcheRepository.findOne(id);
 	}
 
+	@RequestMapping(value = "/entrepriseBM/{id}", method = RequestMethod.GET)
+	public Entreprise getEntrepriseByMarcheId(@PathVariable Long id) {
+		System.out.println("idMArche= " + id);
+		return marcheRepository.findOne(id).getEntreprise();
+	}
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public boolean supprimerMarche(@PathVariable Long id) {
 		if (marcheRepository.findOne(id) != null) {
