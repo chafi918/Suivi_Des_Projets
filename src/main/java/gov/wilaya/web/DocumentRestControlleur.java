@@ -1,7 +1,12 @@
 package gov.wilaya.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.assertj.core.groups.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.wilaya.beans.DocumentMapOutput;
 import gov.wilaya.beans.InputDocument;
 import gov.wilaya.dao.DocumentRepository;
 import gov.wilaya.dao.ProjetRepository;
@@ -27,39 +33,59 @@ public class DocumentRestControlleur {
 	private DocumentRepository documentRepository;
 	@Autowired
 	private ProjetRepository projetRepository;
-	
-	@RequestMapping(value = "/ajout", method = RequestMethod.POST,
-			consumes = MediaType.APPLICATION_JSON_VALUE)
+
+	@RequestMapping(value = "/ajout", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void ajouterDocument(@RequestBody InputDocument inputDocument) {
 		Document document = inputDocument.getDocument();
-			System.out.println("idProjet pour le document: " + inputDocument.getIdProjet());
-			System.out.println("nom pour le document: " + inputDocument.getDocument().getNomDocument());
-			System.out.println("contenu pour le document: " + inputDocument.getContenu());
-			System.out.println("bytes: "+inputDocument.getContenu().getBytes().toString());
-			
-			document.setProjet(projetRepository.findOne(inputDocument.getIdProjet()));
-			document.setContenu(inputDocument.getContenu().getBytes());
-			documentRepository.save(document);
+		System.out.println("idProjet pour le document: " + inputDocument.getIdProjet());
+		System.out.println("nom pour le document: " + inputDocument.getDocument().getNomDocument());
+		System.out.println("contenu pour le document: " + inputDocument.getContenu());
+
+		document.setProjet(projetRepository.findOne(inputDocument.getIdProjet()));
+		document.setContenu(inputDocument.getContenu().getBytes());
+		System.out.println("bytes: " + document.getContenu());
+		for (int i = 0; i < document.getContenu().length; i++) {
+			System.out.print(document.getContenu()[i]);
+		}
+		documentRepository.save(document);
 	}
-	
+
 	@RequestMapping(value = "/documents", method = RequestMethod.GET)
-	public List<Document> getDocuments(){
+	public List<Document> getDocuments() {
 		return documentRepository.findAll();
 	}
-	
+
+	@RequestMapping(value="/documentsMap", method= RequestMethod.GET)
+	public DocumentMapOutput getMapDocuments(){
+		List<Document> listdocument = documentRepository.findAll();
+		Map<String, Map<String, List<Document>>> documentsMap = listdocument.stream().collect(
+				Collectors.groupingBy(projet -> projet.getProjet().getIntitule(),
+						Collectors.groupingBy(type -> type.getType().getLibelleType()))
+				);
+		Set<String> projets = listdocument.stream().map(document -> {
+			return document.getProjet().getIntitule();
+		}).collect(Collectors.toSet());
+		
+		Set<String> types = listdocument.stream().map(document -> {
+			return document.getType().getLibelleType();
+		}).collect(Collectors.toSet());
+		
+		return new DocumentMapOutput(documentsMap, projets, types);
+	}
+
 	@RequestMapping(value = "/getDocuments", method = RequestMethod.GET)
-	public Page<Document> getDocuments(@RequestParam(name="page",defaultValue="0")int page,
-			@RequestParam(name="size",defaultValue="5")int size){
+	public Page<Document> getDocuments(@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
 		return documentRepository.findAll(new PageRequest(page, size));
 	}
-	
+
 	@RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
 	public Page<Document> getDocuments(@PathVariable String name,
-	@RequestParam(name="page",defaultValue="0")int page,
-	@RequestParam(name="size",defaultValue="5")int size){
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
 		return documentRepository.findByName(name, new PageRequest(page, size));
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Document getDocumentById(@PathVariable Long id) {
 		return documentRepository.findOne(id);
@@ -67,17 +93,17 @@ public class DocumentRestControlleur {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public boolean udpateProjet(@PathVariable Long id, @RequestBody Document document) {
-		if ( documentRepository.findOne(id) != null) {
+		if (documentRepository.findOne(id) != null) {
 			document.setIdDocument(id);
 			documentRepository.save(document);
 			return true;
 		}
 		return false;
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public boolean supprimerDocument(@PathVariable Long id) {
-		if ( documentRepository.findOne(id) != null) {
+		if (documentRepository.findOne(id) != null) {
 			documentRepository.delete(id);
 			return true;
 		} else {
@@ -85,31 +111,31 @@ public class DocumentRestControlleur {
 		}
 	}
 
-	@RequestMapping(value="documents", method=RequestMethod.DELETE)
-	public void supprimerDocumentss(){
+	@RequestMapping(value = "documents", method = RequestMethod.DELETE)
+	public void supprimerDocumentss() {
 		documentRepository.deleteAll();
 	}
-	
+
 	@RequestMapping(value = "/projet", method = RequestMethod.GET)
-	public Page<Document> getDocumentsByProject(
-			@RequestParam(name = "idProjet") Long idProjet,
-			@RequestParam(name="page",defaultValue="0")int page,
-			@RequestParam(name="size",defaultValue="5")int size) {
+	public Page<Document> getDocumentsByProject(@RequestParam(name = "idProjet") Long idProjet,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
 		System.out.println("get documents du projet : " + idProjet);
 		return documentRepository.chercherParProjet(idProjet, new PageRequest(page, size));
 	}
-	
+
 	@RequestMapping(value = "/type", method = RequestMethod.GET)
-	public Page<Document> getDocumentsByType(@RequestParam(name = "typeDocument", defaultValue = "")  String typeDocument,
-			@RequestParam(name="page",defaultValue="0")int page,
-			@RequestParam(name="size",defaultValue="5")int size) {
+	public Page<Document> getDocumentsByType(
+			@RequestParam(name = "typeDocument", defaultValue = "") String typeDocument,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
 		return documentRepository.chercherParType(typeDocument, new PageRequest(page, size));
 	}
-	
+
 	@RequestMapping(value = "/chargeur/{chargeur}", method = RequestMethod.GET)
-	public Page<Document> getDocumentParCharger(@PathVariable String chargeur ,
-			@RequestParam(name="page",defaultValue="0")int page,
-			@RequestParam(name="size",defaultValue="5")int size) {
+	public Page<Document> getDocumentParCharger(@PathVariable String chargeur,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
 		return documentRepository.chercherParChargeur(chargeur, new PageRequest(page, size));
 	}
 }
