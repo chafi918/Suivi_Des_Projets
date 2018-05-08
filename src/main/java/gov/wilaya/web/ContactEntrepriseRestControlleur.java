@@ -66,7 +66,8 @@ public class ContactEntrepriseRestControlleur {
 	}
 	
 	@RequestMapping(value = "/entreprise", method = RequestMethod.GET)
-	public Page<ContactEntreprise> getContactByEntreprise(@RequestParam(name = "idEntreprise" )  Long idEntreprise,
+	public Page<ContactEntreprise> getContactByEntreprise(
+			@RequestParam(name = "idEntreprise" )  Long idEntreprise,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
 		return contactEntrepriseRepository.findByEntreprise(idEntreprise, new PageRequest(page, size));
@@ -77,6 +78,15 @@ public class ContactEntrepriseRestControlleur {
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size) {
 		return contactEntrepriseRepository.findByName(contact, new PageRequest(page, size));
+	}
+	
+	@RequestMapping(value = "/byEntreprise", method = RequestMethod.GET)
+	public Page<ContactEntreprise> getContactByNameAndEntreprise(
+			@RequestParam(name = "name", defaultValue = "") String contact,
+			@RequestParam(name = "idEntreprise") Long idEntreprise,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size) {
+		return contactEntrepriseRepository.findByNameAndEntreprise(contact, idEntreprise,new PageRequest(page, size));
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

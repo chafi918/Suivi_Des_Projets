@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
 import gov.wilaya.entities.ContactEntreprise;
+import gov.wilaya.entities.Marche;
 
 @Component
 public interface ContactEntrepriseRepository extends JpaRepository<ContactEntreprise, Long> {
@@ -23,5 +24,8 @@ public interface ContactEntrepriseRepository extends JpaRepository<ContactEntrep
 
 	@Query("select contact from ContactEntreprise contact where contact.nomContact = :name")
 	public List<ContactEntreprise> sameContact(@Param("name") String name);
+
+	@Query("select contact from ContactEntreprise contact where contact.nomContact like %:name% and contact.entreprise.idEntreprise = :idEntreprise")
+	public Page<ContactEntreprise> findByNameAndEntreprise(@Param("name")String name,@Param("idEntreprise") Long idEntreprise, Pageable pageRequest);
 
 }

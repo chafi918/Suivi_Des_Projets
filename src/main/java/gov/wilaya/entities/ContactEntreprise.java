@@ -21,7 +21,7 @@ public class ContactEntreprise implements Serializable {
 	private String nomContact;
 	@NotBlank
 	private String responsabilite;
-	private long telephone;
+	private String telephone;
 	@Email
 	@NotBlank
 	private String mailContact;
@@ -33,7 +33,7 @@ public class ContactEntreprise implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ContactEntreprise(String nomContact, String responsabilite, String mailContact, long telephone) {
+	public ContactEntreprise(String nomContact, String responsabilite, String mailContact, String telephone) {
 		super();
 		this.nomContact = nomContact;
 		this.responsabilite = responsabilite;
@@ -47,10 +47,10 @@ public class ContactEntreprise implements Serializable {
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
 	}
-	public long getTelephone() {
+	public String getTelephone() {
 		return telephone;
 	}
-	public void setTelephone(long telephone) {
+	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
 	public Long getIdContact() {
