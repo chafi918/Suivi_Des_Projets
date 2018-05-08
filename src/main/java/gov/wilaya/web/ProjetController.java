@@ -67,18 +67,8 @@ public class ProjetController {
 			@RequestParam(name="size",defaultValue="5")int size) {
 		return projetRepository.chercherParCommune(commune, new PageRequest(page, size));
 	}
-	@RequestMapping(value = "secteur/{idSecteur}", method = RequestMethod.GET)
-	public Page<Projet> getProjetParSecteur(@PathVariable Long idSecteur,
-			@RequestParam(name="page",defaultValue="0")int page,
-			@RequestParam(name="size",defaultValue="5")int size) {
-		return projetRepository.chercherParSecteur(idSecteur, new PageRequest(page, size));
-	}
-	@RequestMapping(value = "statut/{idStatut}", method = RequestMethod.GET)
-	public Page<Projet> getProjetParStatut(@PathVariable Long idStatut,
-			@RequestParam(name="page",defaultValue="0")int page,
-			@RequestParam(name="size",defaultValue="5")int size) {
-		return projetRepository.chercherParStatut(idStatut, new PageRequest(page, size));
-	}
+	
+
 	@RequestMapping(value = "/intitule", method = RequestMethod.GET)
 	public Page<Projet> getProjetParIntitule(@RequestParam(name="intitule") String intitule ,
 			@RequestParam(name="page",defaultValue="0")int page,
@@ -96,6 +86,28 @@ public class ProjetController {
 	public Page<Projet> getProjetMasque(@RequestParam(name="page",defaultValue="0")int page,
 			@RequestParam(name="size",defaultValue="5")int size) {
 		return projetRepository.chercherProjetMasque(new PageRequest(page, size));
+	}
+	
+	@RequestMapping(value = "/recherche", method = RequestMethod.GET)
+	public Page<Projet> getProjetParCritere(@RequestParam(name="critere",defaultValue="") String critere,
+			@RequestParam(name="mc",defaultValue="") String mc,
+			@RequestParam(name="page",defaultValue="0")int page,
+			@RequestParam(name="size",defaultValue="5")int size) {
+		switch(critere){
+		case "statut":
+			return projetRepository.chercherParStatut(mc, new PageRequest(page, size));
+		case "secteur":
+			return projetRepository.chercherParSecteur(mc, new PageRequest(page, size));
+		case "commune":
+			return projetRepository.chercherParCommune(mc, new PageRequest(page, size));
+		case "royal":
+			return projetRepository.chercherProjetRoyal(new PageRequest(page, size));
+		case "masque":
+			return projetRepository.chercherProjetMasque(new PageRequest(page, size));
+		default:
+			return projetRepository.chercherParIntitule(mc, new PageRequest(page, size));
+		}
+		
 	}
 	
 }

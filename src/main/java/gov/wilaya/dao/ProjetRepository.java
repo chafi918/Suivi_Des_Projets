@@ -31,11 +31,11 @@ public interface ProjetRepository extends JpaRepository<Projet, Long> {
 	@Query("select p from Projet p where p.estMasque = 1")
 	public Page<Projet> chercherProjetMasque(Pageable p);
 	
-	@Query("select p from Projet p where p.secteur.idSecteur = :x")
-	public Page<Projet> chercherParSecteur(@Param("x")Long idSecteur, Pageable p);
+	@Query("select p from Projet p where p.secteur.libelleSecteur like %:x%")
+	public Page<Projet> chercherParSecteur(@Param("x")String libelleSecteur, Pageable p);
 	
-	@Query("select p from Projet p where p.statut.idStatut = :x")
-	public Page<Projet> chercherParStatut(@Param("x")Long idStatut ,Pageable p);
+	@Query("select p from Projet p where p.statut.libelleStatut like %:x%")
+	public Page<Projet> chercherParStatut(@Param("x")String libelleStatut ,Pageable p);
 	
 	//TODO: get a method to calculate the rates of progress for projects ?s
 
