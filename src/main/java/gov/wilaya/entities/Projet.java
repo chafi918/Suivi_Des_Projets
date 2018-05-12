@@ -24,8 +24,10 @@ public class Projet implements Serializable {
 	private Long idProjet;
 	@NotBlank
 	private String intitule;
-	@NotBlank
-	private String commune;
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "idCommune")
+	private Commune commune;
 	@NotBlank
 	private String province;
 	@NotNull
@@ -49,6 +51,37 @@ public class Projet implements Serializable {
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "idSecteur")
 	private Secteur secteur;
+	@NotNull
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "idStatut")
+	private Statut statut;
+	
+	public Projet(String intitule, Commune commune,String province, double montantProgramme, boolean estProjetRoyal, Date dateAO,
+			boolean estMasque, Statut statut, Secteur secteur) {
+		super();
+		this.intitule = intitule;
+		this.commune = commune;
+		this.province = province;
+		this.montantProgramme = montantProgramme;
+		this.estProjetRoyal = estProjetRoyal;
+		this.dateAO = dateAO;
+		this.estMasque = estMasque;
+		this.secteur = secteur;
+		this.statut = statut;
+	}
+	public Projet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Commune getCommune() {
+		return commune;
+	}
+
+	public void setCommune(Commune commune) {
+		this.commune = commune;
+	}
+
 	public String getProvince() {
 		return province;
 	}
@@ -64,10 +97,6 @@ public class Projet implements Serializable {
 	public void setTauxAvancement(float tauxAvancement) {
 		this.tauxAvancement = tauxAvancement;
 	}
-	@NotNull
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "idStatut")
-	private Statut statut;
 
 	public Long getIdProjet() {
 		return idProjet;
@@ -81,12 +110,6 @@ public class Projet implements Serializable {
 	}
 	public void setIntitule(String intitule) {
 		this.intitule = intitule;
-	}
-	public String getCommune() {
-		return commune;
-	}
-	public void setCommune(String commune) {
-		this.commune = commune;
 	}
 	public double getMontantProgramme() {
 		return montantProgramme;
@@ -142,26 +165,4 @@ public class Projet implements Serializable {
 	public void setStatut(Statut statut) {
 		this.statut = statut;
 	}
-
-	public Projet(String intitule, String commune,String province, double montantProgramme, boolean estProjetRoyal, Date dateAO,
-			boolean estMasque, Statut statut, Secteur secteur) {
-		super();
-		this.intitule = intitule;
-		this.commune = commune;
-		this.province = province;
-		this.montantProgramme = montantProgramme;
-		this.estProjetRoyal = estProjetRoyal;
-		this.dateAO = dateAO;
-		this.estMasque = estMasque;
-		this.secteur = secteur;
-		this.statut = statut;
-	}
-	public Projet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-	
-
 }

@@ -13,7 +13,7 @@ import gov.wilaya.entities.Projet;
 
 @Component
 public interface ProjetRepository extends JpaRepository<Projet, Long> {
-	@Query("select p from Projet p where p.commune like %:x%")
+	@Query("select p from Projet p where p.commune.libelleCommune like %:x%")
 	public Page<Projet> chercherParCommune(@Param("x")String commune, Pageable p);
 
 	@Query("select p from Projet p where p.intitule like %:x%")
