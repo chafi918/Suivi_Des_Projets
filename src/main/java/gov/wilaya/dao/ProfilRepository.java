@@ -21,5 +21,8 @@ public interface ProfilRepository extends JpaRepository<Profil, Long> {
 	
 	@Query("select profil from Profil profil where profil.libelleProfil like %:x%")
 	public Page<Profil>  searchByName(@Param("x") String label, Pageable p);
+	
+	@Query("select profil from Profil profil where profil.libelleProfil = :x")
+	public Profil findByProfilName(@Param("x") String label);
 		
 }

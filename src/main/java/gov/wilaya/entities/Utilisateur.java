@@ -3,6 +3,7 @@ package gov.wilaya.entities;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity 
 public class Utilisateur implements Serializable{
@@ -26,6 +29,7 @@ public class Utilisateur implements Serializable{
 	@Email
 	private String mailUser;
 	@NotBlank
+	@Column(unique=true)
 	private String loginUser;
 	@NotBlank
 	private String mdpUser;
@@ -93,6 +97,7 @@ public class Utilisateur implements Serializable{
 	public String getMdpUser() {
 		return mdpUser;
 	}
+	
 	public void setMdpUser(String mdpUser) {
 		this.mdpUser = mdpUser;
 	}

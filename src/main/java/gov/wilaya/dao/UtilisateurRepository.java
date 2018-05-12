@@ -26,5 +26,8 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	
 	@Query("select utilisateur from Utilisateur utilisateur where utilisateur.division.idDivision = :x")
 	public Page<Utilisateur> findByDivision(@Param("x") Long idDivision, Pageable p);
-
+	
+	@Query("select utilisateur from Utilisateur utilisateur where utilisateur.loginUser = :x")
+	public Utilisateur findByUserName(@Param("x") String username);
+	
 }

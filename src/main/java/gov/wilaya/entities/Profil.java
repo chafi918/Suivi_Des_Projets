@@ -2,6 +2,7 @@ package gov.wilaya.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,7 @@ public class Profil implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idProfil;
 	@NotBlank
+	@Column(unique=true)
 	private String libelleProfil;
 	
 	public Profil(String libelleProfil) {
