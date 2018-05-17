@@ -1,5 +1,8 @@
 package gov.wilaya.web;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,6 +122,8 @@ public class ProjetController {
 		case "secteur":
 			return new ProjetStatsOutPut(allProjet.stream().collect(
 					Collectors.groupingBy(projet -> projet.getSecteur().getLibelleSecteur(), Collectors.counting())));
+		case "annee":
+			return statistiquesProjetAnnee(allProjet);
 		default:
 			return new ProjetStatsOutPut(projetMap2);
 		}
@@ -126,6 +131,16 @@ public class ProjetController {
 		
 	}
 
+	private ProjetStatsOutPut statistiquesProjetAnnee(List<Projet> allProjet){
+		Map<String, Long> statMap = allProjet.stream().collect(
+				Collectors.groupingBy(projet -> {
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(projet.getDateCommTravaux());
+					return String.valueOf(cal.get(Calendar.YEAR));	
+				}, Collectors.counting()));
+		return new ProjetStatsOutPut(statMap);
+	}
+	
 	@RequestMapping(value = "/recherche", method = RequestMethod.GET)
 	public Page<Projet> getProjetParCritere(@RequestParam(name = "critere", defaultValue = "") String critere,
 			@RequestParam(name = "mc", defaultValue = "") String mc,
