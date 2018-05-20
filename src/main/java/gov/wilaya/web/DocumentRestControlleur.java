@@ -1,5 +1,8 @@
 package gov.wilaya.web;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,22 +58,70 @@ public class DocumentRestControlleur {
 		return documentRepository.findAll();
 	}
 
-	@RequestMapping(value="/documentsMap", method= RequestMethod.GET)
-	public DocumentMapOutput getMapDocuments(){
+	@RequestMapping(value = "/documentsMap", method = RequestMethod.GET)
+	public DocumentMapOutput getMapDocuments() {
 		List<Document> listdocument = documentRepository.findAll();
-		Map<String, Map<String, List<Document>>> documentsMap = listdocument.stream().collect(
-				Collectors.groupingBy(projet -> projet.getProjet().getIntitule(),
-						Collectors.groupingBy(type -> type.getType().getLibelleType()))
-				);
-		Set<String> projets = listdocument.stream().map(document -> {
-			return document.getProjet().getIntitule();
-		}).collect(Collectors.toSet());
+		Map<String, Map<String, List<Document>>> documentsMap = listdocument.stream()
+				.collect(Collectors.groupingBy(projet -> projet.getProjet().getIntitule(),
+								Collectors.groupingBy(type -> type.getType().getLibelleType())));
+		
+		Set<String> projets = documentsMap.keySet();
 		
 		Set<String> types = listdocument.stream().map(document -> {
 			return document.getType().getLibelleType();
 		}).collect(Collectors.toSet());
+
+		Set<String> years = listdocument.stream().map(document -> {
+			return getYearOfDate(document.getProjet().getDateCommTravaux());
+		}).collect(Collectors.toSet());
+
+		return new DocumentMapOutput(documentsMap, projets, types, years);
+	}
+
+	@RequestMapping(value = "/documentsMapByYear", method = RequestMethod.GET)
+	public DocumentMapOutput getDocumentsByYear(
+			@RequestParam(name = "year", defaultValue = "0") int year,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "10") int size){
+		System.out.println("year: "+ year + ", page: " + page);
+		Page<Document> documentPage;
+		if (year==0) {
+			documentPage = documentRepository.findAll(new PageRequest(page, size));
+		} else {
+			documentPage = documentRepository.getDocumentsByYear(year, new PageRequest(page, size));
+		}
+		int pages = documentPage.getTotalPages();
+		System.out.println("pages: " + pages + ", documentPage.totl: "+ documentPage.getTotalElements());
+		List<Document> listdocument = new ArrayList<>();
+		documentPage.forEach(d -> listdocument.add(d));
+		DocumentMapOutput result = getReturnOutput(listdocument);
+		int currentPage = documentPage.getNumber();
+		System.out.println("currentPage: " + currentPage);
+		result.setTotalPages(pages);
+		result.setCurrentPage(currentPage);
+		return result;
 		
-		return new DocumentMapOutput(documentsMap, projets, types);
+	}
+	
+	private DocumentMapOutput getReturnOutput(List<Document> listdocument) {
+		Map<String, Map<String, List<Document>>> documentsMap = listdocument.stream()
+				.collect(Collectors.groupingBy(projet -> projet.getProjet().getIntitule(),
+								Collectors.groupingBy(type -> type.getType().getLibelleType())));
+		Set<String> projets = documentsMap.keySet();
+		Set<String> types = listdocument.stream().map(document -> {
+			return document.getType().getLibelleType();
+		}).collect(Collectors.toSet());
+		Set<String> years = projetRepository.findAll().stream().map( p -> {
+			return getYearOfDate(p.getDateCommTravaux());
+		}).collect(Collectors.toSet());
+		return new DocumentMapOutput(documentsMap, projets, types, years);
+		
+	}
+
+	public String getYearOfDate(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return String.valueOf(cal.get(Calendar.YEAR));
 	}
 
 	@RequestMapping(value = "/getDocuments", method = RequestMethod.GET)

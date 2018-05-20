@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
@@ -28,5 +29,8 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
 
 	@Query("select document from Document document where document.chargeurDocument like %:x%")
 	public Page<Document> chercherParChargeur(@Param("x") String chargeurDocument, Pageable p);
+	
+	@Query("select document from Document document where YEAR(document.projet.dateCommTravaux) = :x")
+	public Page<Document> getDocumentsByYear(@Param("x") int y, Pageable p);
 
 }
