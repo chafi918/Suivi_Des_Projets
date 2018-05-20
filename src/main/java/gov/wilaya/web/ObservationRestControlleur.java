@@ -1,5 +1,7 @@
 package gov.wilaya.web;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,6 +34,7 @@ public class ObservationRestControlleur {
 		
 		Observation observation = inputObservation.getObservation();
 		observation.setProjet(projetRepository.findOne(inputObservation.getIdProjet()));
+		observation.setDateObservation(new Date());;
 		observationRepository.save(observation);
 	}
 

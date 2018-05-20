@@ -46,6 +46,7 @@ public class DocumentRestControlleur {
 
 		document.setProjet(projetRepository.findOne(inputDocument.getIdProjet()));
 		document.setContenu(inputDocument.getContenu().getBytes());
+		document.setDateAjout(new Date());
 		System.out.println("bytes: " + document.getContenu());
 		for (int i = 0; i < document.getContenu().length; i++) {
 			System.out.print(document.getContenu()[i]);
