@@ -29,12 +29,12 @@ public class SuiviDesProjetsApplication implements CommandLineRunner{
 	
 	@Override
 	public void run(String... arg0) throws Exception {
-		Division d1= divisionRepository.save(new Division("comptabilité"));
-		Profil p1 = profilRepository.save(new Profil("admin"));
-		Profil p2 = profilRepository.save(new Profil("user"));
+	/*	Division d1= divisionRepository.save(new Division("comptabilité"));
+		Profil p1 = profilRepository.save(new Profil("ADMIN"));
+		Profil p2 = profilRepository.save(new Profil("USER"));
 		utilisateurRepository.save(new Utilisateur("oumaima", "houban", "ouma@fd.fr", "admin", "oumaima", "pdj",
 				true, d1, p1));
 		utilisateurRepository.save(new Utilisateur("oumaima", "houban", "houban@fd.fr", "user", "oumaima", "pdj",
-				true, d1, p2));
+				true, d1, p2));*/
 	}
 }
