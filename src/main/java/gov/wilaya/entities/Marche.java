@@ -1,6 +1,7 @@
 package gov.wilaya.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,10 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class Marche implements Serializable {
 	
@@ -30,6 +34,9 @@ public class Marche implements Serializable {
 	private String delaiExecution;
 	@NotNull
 	private float tauxAvancement;
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
+	private Date dateOS;
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "idNature")
 	private NatureMarche nature;

@@ -103,18 +103,6 @@ public class ProjetController {
 			@RequestParam(name = "critere", defaultValue = "") String critere) {
 		List<Projet> allProjet = projetRepository.findAll();
 		System.out.println("----------- critere ------ : " + critere);
-		// ****************** For test : to delete
-		Map<String, Long> projetMap2 = new HashMap<>();
-		projetMap2.put("aaa", new Long(10));
-		projetMap2.put("bba", new Long(11));
-		projetMap2.put("aba", new Long(12));
-		projetMap2.put("aab", new Long(13));
-		projetMap2.put("bab", new Long(13));
-		projetMap2.put("acab", new Long(13));
-		projetMap2.put("aadb", new Long(13));
-		projetMap2.put("afb", new Long(13));
-		projetMap2.put("agb", new Long(13));
-		// ******************
 		switch (critere) {
 		case "commune":
 			return new ProjetStatsOutPut(allProjet.stream().collect(
@@ -122,10 +110,13 @@ public class ProjetController {
 		case "secteur":
 			return new ProjetStatsOutPut(allProjet.stream().collect(
 					Collectors.groupingBy(projet -> projet.getSecteur().getLibelleSecteur(), Collectors.counting())));
+		case "statut":
+			return new ProjetStatsOutPut(allProjet.stream().collect(
+					Collectors.groupingBy(projet -> projet.getStatut().getLibelleStatut(), Collectors.counting())));
 		case "annee":
 			return statistiquesProjetAnnee(allProjet);
 		default:
-			return new ProjetStatsOutPut(projetMap2);
+			return statistiquesProjetAnnee(allProjet);
 		}
 
 		

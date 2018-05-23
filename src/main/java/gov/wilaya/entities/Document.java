@@ -34,6 +34,8 @@ public class Document implements Serializable {
 	private byte[] contenu;
 	@NotBlank
 	private String chargeurDocument;
+	@NotBlank
+	private String objetDocument;
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "idType")
 	private TypeDocument type;

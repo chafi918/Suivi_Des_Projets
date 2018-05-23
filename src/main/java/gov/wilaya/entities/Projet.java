@@ -38,6 +38,9 @@ public class Projet implements Serializable {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date dateOP;
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
+	private Date dateFinTravaux;
 	private String chargeDuProjet;
 	private boolean estProjetRoyal;
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
