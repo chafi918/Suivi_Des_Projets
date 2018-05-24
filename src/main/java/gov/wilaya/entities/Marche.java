@@ -121,6 +121,15 @@ public class Marche implements Serializable {
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
 	}
+	
+
+	public Date getDateOS() {
+		return dateOS;
+	}
+
+	public void setDateOS(Date dateOS) {
+		this.dateOS = dateOS;
+	}
 
 	@Override
 	public String toString() {

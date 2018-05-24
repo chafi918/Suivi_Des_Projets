@@ -154,5 +154,12 @@ public class Document implements Serializable {
 			return false;
 		return true;
 	}
+	public String getObjetDocument() {
+		return objetDocument;
+	}
+	public void setObjetDocument(String objetDocument) {
+		this.objetDocument = objetDocument;
+	}
+	
 
 }
