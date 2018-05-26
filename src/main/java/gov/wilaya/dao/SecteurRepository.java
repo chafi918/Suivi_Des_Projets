@@ -17,6 +17,6 @@ public interface SecteurRepository extends JpaRepository<Secteur, Long> {
 	@Query("select secteur from Secteur secteur where secteur.libelleSecteur like %:x%")
 	public Page<Secteur> searchByName(@Param("x") String label, Pageable p);
 	
-	@Query("select secteur from Secteur secteur where secteur.libelleSecteur like %:x%")
-	public List<Secteur> findByName(@Param("x") String label);
+	@Query("select secteur from Secteur secteur where secteur.libelleSecteur = :x")
+	public Secteur findByName(@Param("x") String label);
 }

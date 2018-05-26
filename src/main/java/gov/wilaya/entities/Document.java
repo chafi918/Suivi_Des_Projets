@@ -31,7 +31,7 @@ public class Document implements Serializable {
 	private Date dateAjout;
 	@NotEmpty
 	@Lob
-	private byte[] contenu;
+	private String contenu;
 	@NotBlank
 	private String chargeurDocument;
 	@NotBlank
@@ -43,6 +43,13 @@ public class Document implements Serializable {
 	@JoinColumn(name = "idProjet")
 	private Projet projet;
 	
+	
+	public String getObjetDocument() {
+		return objetDocument;
+	}
+	public void setObjetDocument(String objetDocument) {
+		this.objetDocument = objetDocument;
+	}
 	public Projet getProjet() {
 		return projet;
 	}
@@ -52,7 +59,7 @@ public class Document implements Serializable {
 	public Document() {
 		super();
 	}
-	public Document(String nomDocument, Date dateAjout,byte[] contenu, String utilisateur, 
+	public Document(String nomDocument, Date dateAjout,String contenu, String utilisateur, 
 			TypeDocument type) {
 		super();
 		this.nomDocument = nomDocument;
@@ -62,10 +69,10 @@ public class Document implements Serializable {
 		this.type = type;
 	}
 	
-	public byte[] getContenu() {
+	public String getContenu() {
 		return contenu;
 	}
-	public void setContenu(byte[] contenu) {
+	public void setContenu(String contenu) {
 		this.contenu = contenu;
 	}
 	public Long getIdDocument() {
@@ -103,7 +110,7 @@ public class Document implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((chargeurDocument == null) ? 0 : chargeurDocument.hashCode());
-		result = prime * result + Arrays.hashCode(contenu);
+		result = prime * result + ((dateAjout == null) ? 0 : contenu.hashCode());
 		result = prime * result + ((dateAjout == null) ? 0 : dateAjout.hashCode());
 		result = prime * result + ((idDocument == null) ? 0 : idDocument.hashCode());
 		result = prime * result + ((nomDocument == null) ? 0 : nomDocument.hashCode());
@@ -125,7 +132,7 @@ public class Document implements Serializable {
 				return false;
 		} else if (!chargeurDocument.equals(other.chargeurDocument))
 			return false;
-		if (!Arrays.equals(contenu, other.contenu))
+		if (!contenu.equals(other.contenu))
 			return false;
 		if (dateAjout == null) {
 			if (other.dateAjout != null)

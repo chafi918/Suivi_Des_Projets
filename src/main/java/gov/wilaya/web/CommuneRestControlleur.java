@@ -32,8 +32,7 @@ public class CommuneRestControlleur {
 	
 	@RequestMapping(value = "/commune", method = RequestMethod.POST)
 	public void ajouterCommune(@RequestBody Commune commune) {
-		if (communeRepository.findByName(commune.getLibelleCommune()) == null
-				|| communeRepository.findByName(commune.getLibelleCommune()).isEmpty()) {
+		if (communeRepository.findByName(commune.getLibelleCommune()) == null) {
 			communeRepository.save(commune);
 		}
 	}

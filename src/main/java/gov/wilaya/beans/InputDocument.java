@@ -20,6 +20,7 @@ public class InputDocument {
 		this.document = document;
 	}
 	
+	
 	public InputDocument(Long idProjet, Document document, String contenu) {
 		super();
 		this.idProjet = idProjet;

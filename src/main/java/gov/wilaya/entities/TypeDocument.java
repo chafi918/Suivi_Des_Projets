@@ -2,6 +2,7 @@ package gov.wilaya.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ public class TypeDocument implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idTypeDoc;
 	@NotBlank
+	@Column(unique=true)
 	private String libelleType;
 
 	public TypeDocument(String libelleType) {
