@@ -44,12 +44,6 @@ public class Document implements Serializable {
 	private Projet projet;
 	
 	
-	public String getObjetDocument() {
-		return objetDocument;
-	}
-	public void setObjetDocument(String objetDocument) {
-		this.objetDocument = objetDocument;
-	}
 	public Projet getProjet() {
 		return projet;
 	}
