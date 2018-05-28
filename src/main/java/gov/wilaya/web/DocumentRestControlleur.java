@@ -136,8 +136,10 @@ public class DocumentRestControlleur {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public boolean udpateDocument(@PathVariable Long id, @RequestBody Document document) {
-		if (documentRepository.findOne(id) != null) {
+		Document findDocument = documentRepository.findOne(id);
+		if (findDocument != null) {
 			document.setIdDocument(id);
+			document.setContenu(findDocument.getContenu());
 			documentRepository.save(document);
 			return true;
 		}
