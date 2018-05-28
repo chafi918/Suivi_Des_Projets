@@ -26,7 +26,7 @@ public class SuiviDesProjetsApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... arg0) throws Exception {
+	public void run(String... arg0) throws Exception {/*
 		Division d1 = divisionRepository.findByName("comptabilité"); 
 		if (d1 == null) {
 			divisionRepository.save(new Division("comptabilité"));
@@ -46,6 +46,6 @@ public class SuiviDesProjetsApplication implements CommandLineRunner {
 		utilisateurRepository
 				.save(new Utilisateur("oumaima", "houban", "ouma@fd.fr", "admin", "oumaima", "pdj", true, d1, admin));
 		utilisateurRepository
-				.save(new Utilisateur("oumaima", "houban", "houban@fd.fr", "user", "oumaima", "pdj", true, d1, user));
+				.save(new Utilisateur("oumaima", "houban", "houban@fd.fr", "user", "oumaima", "pdj", true, d1, user));*/
 	}
 }
