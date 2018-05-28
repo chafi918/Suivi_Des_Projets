@@ -13,7 +13,7 @@ import gov.wilaya.entities.TypeDocument;
 @Component
 public interface TypeDocumentRepository extends JpaRepository<TypeDocument, Long>{
 	@Query("select typeDocument from TypeDocument typeDocument where typeDocument.libelleType = :x")
-	public List<TypeDocument> searchByName(@Param("x") String label);
+	public TypeDocument searchByName(@Param("x") String label);
 	
 	@Query("select typeDocument from TypeDocument typeDocument where typeDocument.libelleType like %:x%")
 	public Page<TypeDocument> findByName(@Param("x") String label, Pageable p);

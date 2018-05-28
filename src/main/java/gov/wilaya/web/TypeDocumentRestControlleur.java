@@ -25,8 +25,7 @@ public class TypeDocumentRestControlleur {
 
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouterTypeDocument(@RequestBody TypeDocument typeDocument) {
-		if ( typeDocumentRepository.searchByName(typeDocument.getLibelleType()) == null || 
-				 typeDocumentRepository.searchByName(typeDocument.getLibelleType()).isEmpty()){
+		if ( typeDocumentRepository.searchByName(typeDocument.getLibelleType()) == null){
 			    typeDocumentRepository.save(typeDocument);
 		}
 	}

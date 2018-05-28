@@ -25,8 +25,7 @@ public class StatutRestControlleur {
 
 	@RequestMapping(value = "/statut", method = RequestMethod.POST)
 	public void ajouterStatut(@RequestBody Statut statut) {
-		if (statutRepository.searchByName(statut.getLibelleStatut()) == null
-				|| statutRepository.searchByName(statut.getLibelleStatut()).isEmpty()) {
+		if (statutRepository.searchByName(statut.getLibelleStatut()) == null) {
 			statutRepository.save(statut);
 		}
 	}

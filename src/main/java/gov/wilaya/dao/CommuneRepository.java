@@ -1,6 +1,5 @@
 package gov.wilaya.dao;
 
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +15,7 @@ public interface CommuneRepository extends JpaRepository<Commune, Long> {
 	@Query("select commune from Commune commune where commune.libelleCommune like %:x%")
 	public Page<Commune> searchByName(@Param("x") String label, Pageable p);
 	
-	@Query("select commune from Commune commune where commune.libelleCommune like %:x%")
-	public List<Commune> findByName(@Param("x") String label);
+	@Query("select commune from Commune commune where commune.libelleCommune = :x")
+	public Commune findByName(@Param("x") String label);
 
 }

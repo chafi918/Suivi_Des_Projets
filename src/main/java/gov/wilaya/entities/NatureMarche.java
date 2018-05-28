@@ -2,6 +2,7 @@ package gov.wilaya.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,7 @@ public class NatureMarche implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idNature;
 	@NotBlank
+	@Column(unique=true)
 	private String libelleNature;
 	
 	public NatureMarche(String libelleNature) {

@@ -3,13 +3,11 @@ package gov.wilaya.web;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.assertj.core.groups.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,21 +34,14 @@ public class DocumentRestControlleur {
 	private DocumentRepository documentRepository;
 	@Autowired
 	private ProjetRepository projetRepository;
-
+	
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void ajouterDocument(@RequestBody InputDocument inputDocument) {
 		Document document = inputDocument.getDocument();
-		System.out.println("idProjet pour le document: " + inputDocument.getIdProjet());
-		System.out.println("nom pour le document: " + inputDocument.getDocument().getNomDocument());
-		System.out.println("contenu pour le document: " + inputDocument.getContenu());
-
+		System.out.println("--content--: " + inputDocument.getContenu());
+		document.setContenu(inputDocument.getContenu());
 		document.setProjet(projetRepository.findOne(inputDocument.getIdProjet()));
-		document.setContenu(inputDocument.getContenu().getBytes());
 		document.setDateAjout(new Date());
-		System.out.println("bytes: " + document.getContenu());
-		for (int i = 0; i < document.getContenu().length; i++) {
-			System.out.print(document.getContenu()[i]);
-		}
 		documentRepository.save(document);
 	}
 
@@ -144,7 +135,7 @@ public class DocumentRestControlleur {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public boolean udpateProjet(@PathVariable Long id, @RequestBody Document document) {
+	public boolean udpateDocument(@PathVariable Long id, @RequestBody Document document) {
 		if (documentRepository.findOne(id) != null) {
 			document.setIdDocument(id);
 			documentRepository.save(document);
@@ -152,7 +143,7 @@ public class DocumentRestControlleur {
 		}
 		return false;
 	}
-
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public boolean supprimerDocument(@PathVariable Long id) {
 		if (documentRepository.findOne(id) != null) {

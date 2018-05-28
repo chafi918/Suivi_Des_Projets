@@ -2,6 +2,7 @@ package gov.wilaya.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +15,7 @@ public class Statut implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idStatut;
 	@NotBlank
+	@Column(unique=true)
 	private String libelleStatut;
 
 	public Statut(String libelleStatut) {

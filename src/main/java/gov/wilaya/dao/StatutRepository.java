@@ -15,7 +15,7 @@ import gov.wilaya.entities.Statut;
 public interface StatutRepository extends JpaRepository<Statut, Long>{
 
 	@Query("select statut from Statut statut where statut.libelleStatut = :x")
-	public List<Statut> searchByName(@Param("x") String label);
+	public Statut searchByName(@Param("x") String label);
 	
 	@Query("select statut from Statut statut where statut.libelleStatut like %:x%")
 	public Page<Statut> findByName(@Param("x") String label, Pageable p);

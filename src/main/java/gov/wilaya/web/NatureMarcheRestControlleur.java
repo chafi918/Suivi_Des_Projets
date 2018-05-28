@@ -24,8 +24,7 @@ public class NatureMarcheRestControlleur {
 
 	@RequestMapping(value = "/ajout", method = RequestMethod.POST)
 	public void ajouterNatureMarche(@RequestBody NatureMarche natureMarche) {
-		if (natureMarcheRepository.searchByName(natureMarche.getLibelleNature()) == null || 
-				natureMarcheRepository.searchByName(natureMarche.getLibelleNature()).isEmpty()) {
+		if (natureMarcheRepository.searchByName(natureMarche.getLibelleNature()) == null) {
 			natureMarcheRepository.save(natureMarche);
 		}
 	}

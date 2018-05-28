@@ -41,12 +41,6 @@ public class Projet implements Serializable {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date dateFinTravaux;
-	public Date getDateFinTravaux() {
-		return dateFinTravaux;
-	}
-	public void setDateFinTravaux(Date dateFinTravaux) {
-		this.dateFinTravaux = dateFinTravaux;
-	}
 	private String chargeDuProjet;
 	private boolean estProjetRoyal;
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -77,6 +71,12 @@ public class Projet implements Serializable {
 		this.estMasque = estMasque;
 		this.secteur = secteur;
 		this.statut = statut;
+	}
+	public Date getDateFinTravaux() {
+		return dateFinTravaux;
+	}
+	public void setDateFinTravaux(Date dateFinTravaux) {
+		this.dateFinTravaux = dateFinTravaux;
 	}
 	public Projet() {
 		super();
