@@ -1,16 +1,18 @@
 package gov.wilaya.web;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import gov.wilaya.beans.ExportProjetsString;
 import gov.wilaya.beans.ProjetStatsOutPut;
 import gov.wilaya.dao.ProjetRepository;
 import gov.wilaya.entities.Projet;
+
 
 @RestController
 @RequestMapping(value = "/projet")
@@ -130,6 +134,21 @@ public class ProjetController {
 					return String.valueOf(cal.get(Calendar.YEAR));	
 				}, Collectors.counting()));
 		return new ProjetStatsOutPut(statMap);
+	}
+	
+	@RequestMapping(value = "/exportProjets", method = RequestMethod.GET)
+	public ExportProjetsString exportProjets(HttpServletResponse response) throws IOException{
+        String[] header = { "Intitulé", "Commune", "Province", "Taux d'avancement",
+                "Montant programmé", "Date d'ouverture des plis", "Chargé du projet", "Date de début des travaux"
+                , "Date de fin des travaux", "Secteur", "Statut"};
+        String headers = String.join(",", header);
+        
+        List<Projet> projets = projetRepository.findAll();
+        String recordAsCsv = projets.stream()
+                .map(Projet::toCsvRow)
+                .collect(Collectors.joining(System.getProperty("line.separator")));
+        recordAsCsv = String.join(System.getProperty("line.separator"), headers, recordAsCsv);
+        return new ExportProjetsString(recordAsCsv);
 	}
 	
 	@RequestMapping(value = "/recherche", method = RequestMethod.GET)

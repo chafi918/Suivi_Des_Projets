@@ -1,7 +1,11 @@
 package gov.wilaya.entities;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -58,6 +62,23 @@ public class Projet implements Serializable {
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "idStatut")
 	private Statut statut;
+	
+	public String toCsvRow() {
+	    return Stream.of(intitule
+	    		, commune.getLibelleCommune()
+	    		, province
+	    		, Float.toString(tauxAvancement)
+	    		, String.valueOf(montantProgramme)
+	    		, dateOP == null ? "-" : new SimpleDateFormat("yyyy-MM-dd",   Locale.getDefault()).format(dateOP) 
+	    		, chargeDuProjet
+	    		, dateCommTravaux==null ? "-" : new SimpleDateFormat("yyyy-MM-dd",   Locale.getDefault()).format(dateCommTravaux)
+	    	    , dateFinTravaux==null ? "-" : new SimpleDateFormat("yyyy-MM-dd",   Locale.getDefault()).format(dateFinTravaux)
+	    		, secteur.getLibelleSecteur()
+	    		, statut.getLibelleStatut())
+	            .map(value -> value.replaceAll("\"", "\"\""))
+	            .map(value -> Stream.of("\"", ",").anyMatch(value::contains) ? "\"" + value + "\"" : value)
+	            .collect(Collectors.joining(","));
+	}
 	
 	public Projet(String intitule, Commune commune,String province, double montantProgramme, boolean estProjetRoyal, Date dateAO,
 			boolean estMasque, Statut statut, Secteur secteur) {
@@ -174,4 +195,5 @@ public class Projet implements Serializable {
 	public void setStatut(Statut statut) {
 		this.statut = statut;
 	}
+	
 }
