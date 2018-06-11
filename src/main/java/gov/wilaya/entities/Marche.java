@@ -31,12 +31,18 @@ public class Marche implements Serializable {
 	@Min(value=0)
 	private double montantTravauxRealises;
 	@NotNull
+	@Min(value=0)
+	private double montantEmis;
+	@NotNull
 	private String delaiExecution;
 	@NotNull
 	private float tauxAvancement;
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date dateOS;
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
+	private Date dateReceptionProvisoire;
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "idNature")
 	private NatureMarche nature;
@@ -130,13 +136,33 @@ public class Marche implements Serializable {
 	public void setDateOS(Date dateOS) {
 		this.dateOS = dateOS;
 	}
+	
+
+	public double getMontantEmis() {
+		return montantEmis;
+	}
+
+	public void setMontantEmis(double montantEmis) {
+		this.montantEmis = montantEmis;
+	}
+
+	public Date getDateReceptionProvisoire() {
+		return dateReceptionProvisoire;
+	}
+
+	public void setDateReceptionProvisoire(Date dateReceptionProvisoire) {
+		this.dateReceptionProvisoire = dateReceptionProvisoire;
+	}
 
 	@Override
 	public String toString() {
 		return "Marche [idMarche=" + idMarche + ", numeroMarche=" + numeroMarche + ", montantMarche=" + montantMarche
-				+ ", montantTravauxRealises=" + montantTravauxRealises + ", delaiExecution=" + delaiExecution
-				+ ", tauxAvancement=" + tauxAvancement + ", nature=" + nature + ", entreprise=" + entreprise
-				+ ", projet=" + projet + "]";
+				+ ", montantTravauxRealises=" + montantTravauxRealises + ", montantEmis=" + montantEmis
+				+ ", delaiExecution=" + delaiExecution + ", tauxAvancement=" + tauxAvancement + ", dateOS=" + dateOS
+				+ ", dateReceptionProvisoire=" + dateReceptionProvisoire + ", nature=" + nature + ", entreprise="
+				+ entreprise + ", projet=" + projet + "]";
 	}
+
+	
 	
 }

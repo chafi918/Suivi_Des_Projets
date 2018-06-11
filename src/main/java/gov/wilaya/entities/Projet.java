@@ -32,8 +32,12 @@ public class Projet implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "idCommune")
 	private Commune commune;
-	@NotBlank
-	private String province;
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "idProvince")
+	private Province province;
+	@NotNull
+	private int anneeDeProgrammation;
 	@NotNull
 	private float tauxAvancement;
 	@NotNull
@@ -66,7 +70,7 @@ public class Projet implements Serializable {
 	public String toCsvRow() {
 	    return Stream.of(intitule
 	    		, commune.getLibelleCommune()
-	    		, province
+	    		, province.getLibelleProvince()
 	    		, Float.toString(tauxAvancement)
 	    		, String.valueOf(montantProgramme)
 	    		, dateOP == null ? "-" : new SimpleDateFormat("yyyy-MM-dd",   Locale.getDefault()).format(dateOP) 
@@ -80,7 +84,7 @@ public class Projet implements Serializable {
 	            .collect(Collectors.joining(","));
 	}
 	
-	public Projet(String intitule, Commune commune,String province, double montantProgramme, boolean estProjetRoyal, Date dateAO,
+	public Projet(String intitule, Commune commune,Province province, double montantProgramme, boolean estProjetRoyal, Date dateAO,
 			boolean estMasque, Statut statut, Secteur secteur) {
 		super();
 		this.intitule = intitule;
@@ -93,17 +97,18 @@ public class Projet implements Serializable {
 		this.secteur = secteur;
 		this.statut = statut;
 	}
+	
+	public Projet() {
+		super();
+	}
+	
 	public Date getDateFinTravaux() {
 		return dateFinTravaux;
 	}
 	public void setDateFinTravaux(Date dateFinTravaux) {
 		this.dateFinTravaux = dateFinTravaux;
 	}
-	public Projet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
+
 	public Commune getCommune() {
 		return commune;
 	}
@@ -112,11 +117,11 @@ public class Projet implements Serializable {
 		this.commune = commune;
 	}
 
-	public String getProvince() {
+	public Province getProvince() {
 		return province;
 	}
 
-	public void setProvince(String province) {
+	public void setProvince(Province province) {
 		this.province = province;
 	}
 
@@ -194,6 +199,14 @@ public class Projet implements Serializable {
 	}
 	public void setStatut(Statut statut) {
 		this.statut = statut;
+	}
+
+	public int getAnneeDeProgrammation() {
+		return anneeDeProgrammation;
+	}
+
+	public void setAnneeDeProgrammation(int anneeDeProgrammation) {
+		this.anneeDeProgrammation = anneeDeProgrammation;
 	}
 	
 }
